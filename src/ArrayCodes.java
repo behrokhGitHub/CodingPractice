@@ -147,6 +147,37 @@ public class ArrayCodes {
 		return result;
 	}
 	
+	/*
+	 * Peak Element
+	 * 
+	 * A peak element is an element that is greater than its neighbors.
+	 * Given an input array where num[i] ≠ num[i+1], find a peak element and return its index
+	 */
+	public static int peakElement ( int[] array ) {
+		int max = 0;
+		int index = 0;
+		
+		for ( int i = 1; i < array.length-2; i++ ) {
+			int curr = array[i];
+			int prev = array[i-1];
+			int next = array[i+1];
+			
+			if ( curr > prev && curr > next && curr > max ) {
+				index = i;
+				max = array[i];
+			}
+			
+			if ( array[array.length-1] > max ) {
+				return array.length-1;
+			}
+		}
+		
+		return index;
+	}
+	
+	
+	
+	
 	//***********************************************************************************************************************
 	//***********************************************************************************************************************
 	//***********************************************************************************************************************
@@ -185,7 +216,15 @@ public class ArrayCodes {
 		 */
 		int[] array4 = {-1, 2, 1, 4};
 		int target = 1;
-		System.out.println(threeSumClosest(array4, target));
+		//System.out.println(threeSumClosest(array4, target));
+		
+		/*
+		 * Peak Element
+		 */
+		int[] array5 = {1, 2, 3, 4};
+		int[] array6 = {0, 5, 7, 6, 4, 6, 9, 0};
+		//System.out.println("peak element in the first array is: " + peakElement(array5) + " , and in the second array is: " + peakElement(array6));
+		
 		
 		
 	}
