@@ -19,6 +19,7 @@ public class ArrayCodes {
 		for ( int i = 0; i < array.length; i++ ) {
 			maxProfit = Math.max(array[i] - minPrice, maxProfit);
 			minPrice = Math.min(array[i], minPrice);
+			
 		}
 		
 		return maxProfit;
