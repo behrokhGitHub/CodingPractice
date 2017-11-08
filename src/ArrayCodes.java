@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ArrayCodes {
@@ -112,7 +113,39 @@ public class ArrayCodes {
 		return m[row-1][col-1];
 	}
 	
-	
+	/*
+	 * 3Sum Closest
+	 * 
+	 * Given an array S of n integers, find three integers in S such that the sum is closest to a given number, 
+	 * target. Return the sum of the three integers. 
+	 * You may assume that each input would have exactly one solution.
+	 */
+	public static int threeSumClosest ( int[] array, int target ) {
+		
+		Arrays.sort(array);
+		int result = array[0] + array[1] + array[array.length-1];
+		
+		for ( int i = 0; i < array.length; i++ ) {
+			int start = i + 1;
+			int end = array.length-1;
+			
+			while ( start < end ) {
+				int sum = array[i] + array[start] + array[end];
+				
+				if (sum > target ) {
+					end--;
+				} else {
+					start++;
+				}
+				
+				if ( Math.abs( sum - target ) < Math.abs(result - target) ) {
+					result = sum;
+				}
+			}
+		}
+				
+		return result;
+	}
 	
 	//***********************************************************************************************************************
 	//***********************************************************************************************************************
@@ -145,7 +178,14 @@ public class ArrayCodes {
 		 */
 		int row = 7;
 		int col = 3;
-		System.out.println(uniquePaths(row, col));
+		//System.out.println(uniquePaths(row, col));
+		
+		/*
+		 * 3Sum Closest
+		 */
+		int[] array4 = {-1, 2, 1, 4};
+		int target = 1;
+		System.out.println(threeSumClosest(array4, target));
 		
 		
 	}
