@@ -54,7 +54,41 @@ public class ArrayCodes {
 			temp.remove(temp.size()-1);
 		}
 	}
-
+	
+	/*
+	 * Permutation
+	 * 
+	 * Given an array of distinct numbers, return a list of all possible permutations.
+	 * 
+	 */
+	public static List<List<Integer>> permutation (int[] array ) {
+		
+		List<List<Integer>> res = new ArrayList<>();
+		List<Integer> temp = new ArrayList<>();
+		
+		permutationHelper(res, temp, array);
+		return res;
+	}
+	
+	private static void permutationHelper(List<List<Integer>> res, List<Integer> temp, int[] array) {
+		if ( temp.size() == array.length ) {
+			res.add(new ArrayList<>(temp));
+		} else {
+			for ( int i = 0; i < array.length; i++ ) {
+				if ( temp.contains(array[i]) ) {
+					continue;
+				}
+				temp.add(array[i]);
+				permutationHelper(res, temp, array);
+				temp.remove(temp.size()-1);
+			}		
+		}
+	}
+	
+	//***********************************************************************************************************************
+	//***********************************************************************************************************************
+	//***********************************************************************************************************************
+	
 	public static void main ( String[] args ) {
 		
 		/*
@@ -68,7 +102,16 @@ public class ArrayCodes {
 		 */
 		int[] array2 = {1, 2, 3};
 		List<List<Integer>> subsetResult = subsets(array2);
-		System.out.println(subsetResult);
+		//System.out.println(subsetResult);
+		
+		/*
+		 * Permutation
+		 */
+		int[] array3 = {1, 2, 3};
+		List<List<Integer>> permutationResult = permutation(array2);
+		System.out.println(permutationResult);
+		
+		
 	}
 	
 	
