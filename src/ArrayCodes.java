@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class ArrayCodes {
@@ -17,10 +18,7 @@ public class ArrayCodes {
 		
 		int maxProfit = 0;
 		int minPrice = Integer.MAX_VALUE;
-		
-		int minPrice_in_array = 0;
-		int maxPrice_in_array = 0;
-		
+			
 		for ( int i = 0; i < array.length; i++ ) {
 			maxProfit = Math.max(array[i] - minPrice, maxProfit);
 			minPrice = Math.min(array[i], minPrice);
@@ -175,7 +173,128 @@ public class ArrayCodes {
 		return index;
 	}
 	
+	/*
+	 * Missing Number
+	 */
+	public static int missingNumber ( int[] array ) {
+		
+		int n = array.length;
+		int actual_sum = (n * (n+1))/2;
+		
+		int sum = 0;
+		for ( int i = 0; i < array.length; i++ ) {
+			sum += array[i];
+		}
+		return actual_sum - sum;
+	}
 	
+	/*
+	 * Find the duplicate Number
+	 * Given an array containing n + 1 integers where each integer is between 1 and n (inclusive), 
+	 * prove that at least one duplicate number must exist. Assume that there is only one duplicate number, 
+	 * find the duplicate one.
+	 * Note:
+	 *	You must not modify the array (assume the array is read only).
+	 *	You must use only constant, O(1) extra space.
+	 *	Your runtime complexity should be less than O(n2).
+	 *	There is only one duplicate number in the array, but it could be repeated more than once.
+	 */
+	public static int findDuplicateNumber ( int[] array ) {
+		int slow = array[0];
+	    int fast = array[array[0]];
+	 
+	    // making sure there is a loop
+	    while ( slow != fast ) {
+	        slow = array[slow];
+	        fast = array[array[fast]];
+	    }
+	 
+	    fast = 0;
+	 
+	    while(fast != slow){
+	        slow = array[slow];
+	        fast = array[fast];
+	    }
+	    return fast;
+	}
+	
+	/*
+	 * Find All Duplicates in an Array 
+	 * Given an array of integers, 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.
+	 * Find all the elements that appear twice in this array.
+	 * Could you do it without extra space and in O(n) runtime?
+	 */
+	public static List<Integer> findDuplicatesI ( int[] array ) {
+		List<Integer> res = new ArrayList<>();
+		
+		// *IMPORTANT* 
+		//because a[i] could be equal to n, means array.length, we have to minimize it with 1
+		for ( int i = 0; i < array.length; i++ ) {
+			int index = Math.abs(array[i])-1;
+			if ( array[index] < 0 ) {
+				res.add(index+1);
+			}
+			array[index] = -array[index];
+		}
+		
+		return res;
+	}
+	
+	/*
+	 * Contains Duplicate
+	 * Given an array of integers, find if the array contains any duplicates. 
+	 * Your function should return true if any value appears at least twice in the array, 
+	 * and it should return false if every element is distinct.
+	 */
+	public static boolean containsDuplicate ( int[] array ) {
+		Arrays.sort(array);
+		
+		for ( int i = 1; i < array.length; i++ ) {
+			if ( array[i] == array[i-1] ) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/*
+	 * Contains Duplicate II
+	 * Given an array of integers and an integer k, 
+	 * find out whether there are two distinct indices i and j in the array such that "array[i] = array[j]" 
+	 * and the absolute difference between i and j is at most k.
+	 */
+	public static boolean containsDuplicateII ( int[] array, int k ) {
+		HashMap<Integer, Integer> map = new HashMap<>();
+		
+		for ( int i = 0; i < array.length; i++ ) {
+			if ( map.containsKey(array[i])) {
+				int index = map.get(array[i]);
+				if ( i - index <= k ) {
+					return true;
+				}
+			}
+			map.put(array[i], i);
+		}
+		return false;
+	}
+	
+	/*
+	 * Remove Duplicates from Sorted Array
+	 * Given a sorted array, remove the duplicates in-place such that each element appear only once and return the new length.
+	 * Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+	 */
+	public static int removeDuplicatesSortedArray ( int[] array ) {
+		// *IMPORTANT* 
+		// Both index and iteration start from 1.
+		int index = 1;
+		
+		for ( int i = 1; i < array.length; i++ ) {
+			if ( array[i] != array[i-1] ) {
+				array[index++] = array[i];
+			}
+		}
+		return index;
+	}
 	
 	
 	//***********************************************************************************************************************
@@ -187,45 +306,83 @@ public class ArrayCodes {
 		/*
 		 * Best Time to Buy and Sell Stock I
 		 */
-		int[] array1 = {310, 315, 275, 295, 260, 270, 290, 230, 255, 250};
+		//int[] array1 = {310, 315, 275, 295, 260, 270, 290, 230, 255, 250};
 		//System.out.print(buySellStock(array1));
 		
 		/*
 		 * Subsets
 		 */
-		int[] array2 = {1, 2, 3};
-		List<List<Integer>> subsetResult = subsets(array2);
+		//int[] array2 = {1, 2, 3};
+		//List<List<Integer>> subsetResult = subsets(array2);
 		//System.out.println(subsetResult);
 		
 		/*
 		 * Permutation
 		 */
-		int[] array3 = {1, 2, 3};
-		List<List<Integer>> permutationResult = permutation(array2);
+		//int[] array3 = {1, 2, 3};
+		//List<List<Integer>> permutationResult = permutation(array2);
 		//System.out.println(permutationResult);
 		
 		/*
 		 * Unique Paths
 		 */
-		int row = 7;
-		int col = 3;
+		//int row = 7;
+		//int col = 3;
 		//System.out.println(uniquePaths(row, col));
 		
 		/*
 		 * 3Sum Closest
 		 */
-		int[] array4 = {-1, 2, 1, 4};
-		int target = 1;
+		//int[] array4 = {-1, 2, 1, 4};
+		//int target = 1;
 		//System.out.println(threeSumClosest(array4, target));
 		
 		/*
 		 * Peak Element
 		 */
-		int[] array5 = {1, 2, 3, 4};
-		int[] array6 = {0, 5, 7, 6, 4, 6, 9, 0};
+		//int[] array5 = {1, 2, 3, 4};
+		//int[] array6 = {0, 5, 7, 6, 4, 6, 9, 0};
 		//System.out.println("peak element in the first array is: " + peakElement(array5) + " , and in the second array is: " + peakElement(array6));
 		
+		/*
+		 * Missing Number
+		 */
+		//int[] array = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+		//System.out.println("The missing number is: " + missingNumber(array)); 
 		
+		
+		/*
+		 * Find the duplicate Number
+		 * Given an array containing n + 1 integers where each integer is between 1 and n (inclusive)
+		 */
+		//int[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 7};
+		//int[] array = {1,1,2};
+		//System.out.println("The duplicate number is: " +	findDuplicateNumber(array));
+		
+		/*
+		 * Find All Duplicates in an Array 
+		 * Given an array of integers, 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.
+		 */
+		//int[] array = {4,3,2,7,8,2,3,1};
+		//System.out.println("The duplicate numbers are: " +	findDuplicatesI(array));
+		
+		/*
+		 * containsDuplicate
+		 */
+		//int[] array = {1,1,2};
+		//System.out.println("Array Contains Duplicates? " +	containsDuplicate(array));
+		
+		/*
+		 * containsDuplicateII
+		 */
+		//int[] array = {1, 2, 3, 7, 5, 6, 8, 9, 7, 10};
+		//System.out.println("Is there any i and j: " +	containsDuplicateII(array, 5));
+		
+		/*
+		 * removeDuplicatesSortedArray
+		 */
+		//int[] array = {1, 1, 1, 2, 3, 3, 5, 6, 6, 7};
+		//System.out.println("The new Length is: " +	removeDuplicatesSortedArray(array));
 		
 	}
 	
