@@ -384,6 +384,17 @@ public class ArrayCodes {
 		//int[] array = {1, 1, 1, 2, 3, 3, 5, 6, 6, 7};
 		//System.out.println("The new Length is: " +	removeDuplicatesSortedArray(array));
 		
+		String s = "AF71";
+		int decimal = 0;
+		
+		for ( int i = 0; i < s.length(); i++ ) {
+			char hex = s.charAt(i);
+			
+			int digit = (hex >= 'A' && hex <= 'F') ? (hex - 'A' + 10) : ( hex - '0' );
+			decimal += ( digit * Math.pow(16,  s.length() - 1 - i));
+		}
+		
+		System.out.println(decimal);
 	}
 	
 	
