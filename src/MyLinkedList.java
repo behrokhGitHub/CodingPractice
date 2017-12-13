@@ -158,7 +158,7 @@ public class MyLinkedList {
 	}
 	
 	// get ( int index )
-	public int get ( int index ) {
+	public Integer get ( int index ) {
 		ListNode curr = head;
 		
 		for ( int i = 0; i < index; i++ ) {
@@ -169,18 +169,5 @@ public class MyLinkedList {
 	}
 	
 	
-	public Integer getTail() {
-		if ( tail == null ) {
-			return null;
-		}
-		return tail.data;
-	}
-	
-	public Integer getHead() {
-		if ( head == null ) {
-			return null;
-		}
-		return head.data;
-	}
 	
 }
