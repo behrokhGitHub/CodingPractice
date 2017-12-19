@@ -1,3 +1,4 @@
+import java.util.HashSet;
 
 public class MyLinkedList {
 	
@@ -135,9 +136,32 @@ public class MyLinkedList {
 			return curr.data;
 		}
 	}
+	
+	// removeDups()
+	public void removeDuplicates () {
+		HashSet<Integer> set = new HashSet<>();
+		
+		ListNode curr = head;
+		ListNode prev = null;
+		
+		while ( curr != null ) {
+			if ( !set.contains(curr.data) ) {
+				set.add(curr.data);
+				prev = curr;
+				curr = curr.next;
+			} else {
+				curr = curr.next;
+				prev.next = curr;
+				size--;
+			}
+			
+		}
+	}
+	
 	// reverse ()
 	public void reverse() {
 		ListNode curr = head;
+		tail = head;
 		ListNode pre = null;
 		ListNode next = null;
 		

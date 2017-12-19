@@ -54,6 +54,23 @@ public class MyLinkedListTest {
 			System.out.println(ll.get(i));
 		}
 		
+		System.out.println("\nTest removeDups: ");
+		ll.addFirst(3);
+		ll.addFirst(4);
+		
+		ll.addLast(6);
+		ll.addLast(7);
+		
+		for ( int i = 0; i < ll.size(); i++ ) {
+			System.out.println(ll.get(i));
+		}
+		
+		System.out.println("before removeDups, and size is: " + ll.size());
+		ll.removeDuplicates();
+		System.out.println("after removeDups, and size is: " + ll.size());
+		for ( int i = 0; i < ll.size(); i++ ) {
+			System.out.println(ll.get(i));
+		}
 		
 		
 		/*

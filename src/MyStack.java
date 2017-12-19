@@ -30,11 +30,17 @@ public class MyStack {
 		}
 		
 		ListNode prev = first;
+		Integer removed = top.data;
+		
 		for ( int i = 0; i < size-1; i++ ) {
 			prev = prev.next;
 		}
+		// OR:
+		/*
+		 * while ( first != last && prev.next.next != null ) {
+		 * 		prev = prev.next;
+		 */
 		
-		Integer removed = top.data;
 		prev.next = null;
 		top = prev;
 		size--;
