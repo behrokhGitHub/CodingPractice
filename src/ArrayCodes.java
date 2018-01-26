@@ -321,7 +321,7 @@ public class ArrayCodes {
 		int negIndex = 0;
 		
 		if ( array[0] >= 0 ) {
-			for ( int i = 0; i < len - 1; i++ ) {
+			for ( int i = 0; i < len; i++ ) {
 				newArray[index++] = array[i]*array[i];
 			}
 			return newArray;
@@ -368,6 +368,53 @@ public class ArrayCodes {
 		return newArray;
 	}
 	
+	public static int[] squareSortedArrayII ( int[] array ) {
+		int len = array.length;
+		int[] newArray = new int[len];
+		int index = 0;
+		
+		int tempInd = 0;
+		
+		while ( tempInd < len ) {
+			if ( array[tempInd] >= 0 ) {
+				break;
+			} else {
+				tempInd++;
+			}
+		}
+		
+		int posIndex = tempInd;
+		int negIndex = tempInd - 1;
+		
+		System.out.print( "posIndex : " + posIndex + "\n" );
+		System.out.print( "negIndex : " + negIndex + "\n" );
+		
+		while ( posIndex < array.length && negIndex >= 0 ) {
+			if ( array[posIndex]*array[posIndex] <= array[negIndex]*array[negIndex] ) {
+				newArray[index++] = array[posIndex]*array[posIndex];
+				posIndex++;
+			} else {
+				newArray[index++] = array[negIndex]*array[negIndex];
+				negIndex--;
+			} 
+		}
+
+		if ( posIndex < array.length ) {
+			while ( posIndex < array.length ) {
+				newArray[index++] = array[posIndex]*array[posIndex];
+				posIndex++;
+			}
+		}
+		
+		if ( negIndex >= 0 ) {
+			while ( negIndex >= 0 ) {
+				newArray[index++] = array[negIndex]*array[negIndex];
+				negIndex--;
+			}
+		}
+		return newArray;
+	}
+	
 	//***********************************************************************************************************************
 	//***********************************************************************************************************************
 	//***********************************************************************************************************************
@@ -376,9 +423,9 @@ public class ArrayCodes {
 		int[] arrayI = {0, 3, 8, 9, 10};
 		int[] arrayII = {-9, -7, -4};
 		int[] arrayIII = {-9, -7, -4, 0, 3, 8, 9, 10};
-		int[] newArrayI = squareSortedArray(arrayI);
-		int[] newArrayII = squareSortedArray(arrayII);
-		int[] newArrayIII = squareSortedArray(arrayIII);
+		int[] newArrayI = squareSortedArrayII(arrayI);
+		int[] newArrayII = squareSortedArrayII(arrayII);
+		int[] newArrayIII = squareSortedArrayII(arrayIII);
 	
 		for ( int i = 0; i < newArrayI.length; i++ ) {
 			System.out.print( newArrayI[i] + " " );
