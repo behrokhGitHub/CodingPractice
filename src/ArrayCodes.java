@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Stack;
 
 public class ArrayCodes {
 	
@@ -296,12 +297,100 @@ public class ArrayCodes {
 		return index;
 	}
 	
+	/*
+	 * Given a array of integers which is sorted. write a function to square each number of the Array in sorted way.
+	 */
+	/* Solution: 
+	* Considered 3 different cases, the input array contains: 
+	* 1. only positive integers, 2. only negative integers, 3. Both positive and negative integers.
+	* For the first and second cases, loop through the array, for the first case, from 0 to 
+	* (array.length - 1), and for the second one from (array.length - 1) to 0, squared each element     
+	*  and set the result in the newArray, and return it.
+	* For the case that we have both positive, and negative integers, I have 2 pointers, one 
+	* (posIndex) which keeps track of positive integers and moves forward, the other (negIndex)      
+	* which keeps track of negative integers, and moves backward. At each step, I compare the       
+	* absolute value of the array’s element at pos/negIndex, and construct the newArray.
+	*/
+
+	public static int[] squareSortedArray ( int[] array ) {
+		int len = array.length;
+		int[] newArray = new int[len];
+		int index = 0;
+		
+		int posIndex = 0;
+		int negIndex = 0;
+		
+		if ( array[0] >= 0 ) {
+			for ( int i = 0; i < len - 1; i++ ) {
+				newArray[index++] = array[i]*array[i];
+			}
+			return newArray;
+		} else if ( array[len - 1] < 0 ){
+			for ( int i = len - 1; i >= 0; i-- ) {
+				newArray[index++] = array[i]*array[i];
+			}
+			return newArray;
+		} else {
+			while ( array[posIndex] < 0 ) {
+				posIndex++;
+			}
+			negIndex = posIndex-1;
+		}
+		
+		while ( posIndex < array.length && negIndex >= 0 ) {
+			if ( Math.abs(array[posIndex]) < Math.abs(array[negIndex] )) {
+				newArray[index++] = array[posIndex]*array[posIndex];
+				posIndex++;
+			} else if ( Math.abs(array[posIndex]) > Math.abs(array[negIndex]) ) {
+				newArray[index++] = array[negIndex]*array[negIndex];
+				negIndex--;
+			} else {
+				newArray[index++] = array[posIndex]*array[posIndex];
+				newArray[index++] = array[negIndex]*array[negIndex];
+				posIndex++;
+				negIndex--;
+			}
+		}
+
+		if ( posIndex < array.length ) {
+			while ( posIndex < array.length ) {
+				newArray[index++] = array[posIndex]*array[posIndex];
+				posIndex++;
+			}
+		}
+		
+		if ( negIndex >= 0 ) {
+			while ( negIndex >= 0 ) {
+				newArray[index++] = array[negIndex]*array[negIndex];
+				negIndex--;
+			}
+		}
+		return newArray;
+	}
 	
 	//***********************************************************************************************************************
 	//***********************************************************************************************************************
 	//***********************************************************************************************************************
 	
 	public static void main ( String[] args ) {
+		int[] arrayI = {0, 3, 8, 9, 10};
+		int[] arrayII = {-9, -7, -4};
+		int[] arrayIII = {-9, -7, -4, 0, 3, 8, 9, 10};
+		int[] newArrayI = squareSortedArray(arrayI);
+		int[] newArrayII = squareSortedArray(arrayII);
+		int[] newArrayIII = squareSortedArray(arrayIII);
+	
+		for ( int i = 0; i < newArrayI.length; i++ ) {
+			System.out.print( newArrayI[i] + " " );
+		}
+		System.out.print( "\n");
+		for ( int i = 0; i < newArrayII.length; i++ ) {
+			System.out.print(newArrayII[i] + " "  );
+		}
+		System.out.print( "\n");
+		for ( int i = 0; i < newArrayIII.length; i++ ) {
+			System.out.print(newArrayIII[i] + " "  );
+		}
 		
 		/*
 		 * Best Time to Buy and Sell Stock I
@@ -384,17 +473,17 @@ public class ArrayCodes {
 		//int[] array = {1, 1, 1, 2, 3, 3, 5, 6, 6, 7};
 		//System.out.println("The new Length is: " +	removeDuplicatesSortedArray(array));
 		
-		String s = "AF71";
-		int decimal = 0;
-		
-		for ( int i = 0; i < s.length(); i++ ) {
-			char hex = s.charAt(i);
-			
-			int digit = (hex >= 'A' && hex <= 'F') ? (hex - 'A' + 10) : ( hex - '0' );
-			decimal += ( digit * Math.pow(16,  s.length() - 1 - i));
-		}
-		
-		System.out.println(decimal);
+//		String s = "AF71";
+//		int decimal = 0;
+//		
+//		for ( int i = 0; i < s.length(); i++ ) {
+//			char hex = s.charAt(i);
+//			
+//			int digit = (hex >= 'A' && hex <= 'F') ? (hex - 'A' + 10) : ( hex - '0' );
+//			decimal += ( digit * Math.pow(16,  s.length() - 1 - i));
+//		}
+//		
+//		System.out.println(decimal);
 	}
 	
 	

@@ -102,14 +102,13 @@ public class MyLinkedList {
 				curr = curr.next;
 			}	
 			
-			ListNode temp = tail;
+			Integer removedData = tail.data;
 			
 			tail = curr;
-			tail.next = null;
-			
+			curr.next = null;
 			
 			size--;
-			return temp.data;	
+			return removedData;	
 		}
 	}
 	
