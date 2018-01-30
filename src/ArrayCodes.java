@@ -320,16 +320,9 @@ public class ArrayCodes {
 		int posIndex = 0;
 		int negIndex = 0;
 		
-		if ( array[0] >= 0 ) {
-			for ( int i = 0; i < len; i++ ) {
-				newArray[index++] = array[i]*array[i];
-			}
-			return newArray;
-		} else if ( array[len - 1] < 0 ){
-			for ( int i = len - 1; i >= 0; i-- ) {
-				newArray[index++] = array[i]*array[i];
-			}
-			return newArray;
+		if ( array[len - 1] < 0 ) {
+			negIndex = len - 1;
+			posIndex = len;
 		} else {
 			while ( array[posIndex] < 0 ) {
 				posIndex++;
@@ -338,33 +331,27 @@ public class ArrayCodes {
 		}
 		
 		while ( posIndex < array.length && negIndex >= 0 ) {
-			if ( Math.abs(array[posIndex]) < Math.abs(array[negIndex] )) {
+			if ( Math.abs(array[posIndex]) <= Math.abs(array[negIndex] )) {
 				newArray[index++] = array[posIndex]*array[posIndex];
 				posIndex++;
-			} else if ( Math.abs(array[posIndex]) > Math.abs(array[negIndex]) ) {
-				newArray[index++] = array[negIndex]*array[negIndex];
-				negIndex--;
 			} else {
-				newArray[index++] = array[posIndex]*array[posIndex];
 				newArray[index++] = array[negIndex]*array[negIndex];
-				posIndex++;
 				negIndex--;
-			}
-		}
-
-		if ( posIndex < array.length ) {
-			while ( posIndex < array.length ) {
-				newArray[index++] = array[posIndex]*array[posIndex];
-				posIndex++;
-			}
+			} 
+			
 		}
 		
-		if ( negIndex >= 0 ) {
-			while ( negIndex >= 0 ) {
-				newArray[index++] = array[negIndex]*array[negIndex];
-				negIndex--;
-			}
+		while ( posIndex < array.length ) {
+			newArray[index++] = array[posIndex]*array[posIndex];
+			posIndex++;
 		}
+
+		while ( negIndex >= 0 ) {
+			newArray[index++] = array[negIndex]*array[negIndex];
+			negIndex--;
+		}
+		
+		
 		return newArray;
 	}
 	
@@ -396,19 +383,17 @@ public class ArrayCodes {
 			} 
 		}
 
-		if ( posIndex < array.length ) {
-			while ( posIndex < array.length ) {
+		while ( posIndex < array.length ) {
 				newArray[index++] = array[posIndex]*array[posIndex];
 				posIndex++;
-			}
 		}
 		
-		if ( negIndex >= 0 ) {
-			while ( negIndex >= 0 ) {
+		
+		while ( negIndex >= 0 ) {
 				newArray[index++] = array[negIndex]*array[negIndex];
 				negIndex--;
-			}
 		}
+		
 		return newArray;
 	}
 	
@@ -417,37 +402,37 @@ public class ArrayCodes {
 	 * (any two numbers X and Y in A) such that X + Y = K.  For example, if A = [9, 3, 1, 10, 6, -5, 4, 2, 100, 12, 8] 
 	 * and K = 7, then the pairs are (1, 6), (3, 4), (-5, 12).
 	 */
-//	public static List<List<Integer>> sumTwoNumbers ( int[] array, int k ) {
-//		
-//		List<List<Integer>> result = new ArrayList<>();
-//		List<Integer> temp = new ArrayList<>();
-//		Arrays.sort(array);
-//		
-//		if ( array.length <= 1 ) {
-//			result.add(new ArrayList<>());
-//			return result;
-//		}
-//		
-//		int low = 0;
-//		int high = array.length - 1;
-//		
-//		while ( low < high ) {
-//			
-//			if ( array[low] + array[high] > k ) {
-//				high--;
-//			} else if ( array[low] + array[high] < k ) {
-//				low++;
-//			} else if ( array[low] + array[high] == k ) {
-//				temp.add(array[low++]);
-//				temp.add(array[high--]);
-//				result.add(temp);
-//				temp = new ArrayList<>();
-//			} 
-//		}
-//		
-//		return result;
-//	}
-//	
+	public static List<List<Integer>> sumTwoNumbers ( int[] array, int k ) {
+		
+		List<List<Integer>> result = new ArrayList<>();
+		List<Integer> temp = new ArrayList<>();
+		Arrays.sort(array);
+		
+		if ( array.length <= 1 ) {
+			result.add(new ArrayList<>());
+			return result;
+		}
+		
+		int low = 0;
+		int high = array.length - 1;
+		
+		while ( low < high ) {
+			
+			if ( array[low] + array[high] > k ) {
+				high--;
+			} else if ( array[low] + array[high] < k ) {
+				low++;
+			} else if ( array[low] + array[high] == k ) {
+				temp.add(array[low++]);
+				temp.add(array[high--]);
+				result.add(temp);
+				temp = new ArrayList<>();
+			} 
+		}
+		
+		return result;
+	}
+	
 	public static List<List<Integer>> sumTwoNumbersII ( int[] array, int k ) {
 		
 		List<List<Integer>> result = new ArrayList<>();
@@ -481,41 +466,41 @@ public class ArrayCodes {
 		/*
 		 * sumTwoNumbers
 		 */
-		int[] arrayI = {9, 3, 1, 10, 6, -5, 4, 2, 100, 12, 8};
-		int[] arrayII = {-5, 1, 2, 3, 4, 6, 7, 8, 9, 10, 100};
-		
-		List<List<Integer>> resultI = sumTwoNumbersII(arrayI, 7);
-		List<List<Integer>> resultII = sumTwoNumbersII(arrayII, 7);
-		
-		for ( int i = 0; i < resultI.size(); i++ ) {
-			System.out.print( resultI.get(i) + " " );
-		}
-		System.out.print( "\n" );
-		for ( int i = 0; i < resultII.size(); i++ ) {
-			System.out.print( resultII.get(i) + " " );
-		}
+//		int[] arrayI = {9, 3, 1, 10, 6, -5, 4, 2, 100, 12, 8};
+//		int[] arrayII = {-5, 1, 2, 3, 4, 6, 7, 8, 9, 10, 100};
+//		
+//		List<List<Integer>> resultI = sumTwoNumbersII(arrayI, 7);
+//		List<List<Integer>> resultII = sumTwoNumbersII(arrayII, 7);
+//		
+//		for ( int i = 0; i < resultI.size(); i++ ) {
+//			System.out.print( resultI.get(i) + " " );
+//		}
+//		System.out.print( "\n" );
+//		for ( int i = 0; i < resultII.size(); i++ ) {
+//			System.out.print( resultII.get(i) + " " );
+//		}
 		
 		/*
 		 * squareSortedArray && squareSortedArrayII 
 		 */		
-//		int[] arrayI = {0, 3, 8, 9, 10};
-//		int[] arrayII = {-9, -7, -4};
-//		int[] arrayIII = {-9, -7, -4, 0, 3, 8, 9, 10};
-//		int[] newArrayI = squareSortedArrayII(arrayI);
-//		int[] newArrayII = squareSortedArrayII(arrayII);
-//		int[] newArrayIII = squareSortedArrayII(arrayIII);
-//	
-//		for ( int i = 0; i < newArrayI.length; i++ ) {
-//			System.out.print( newArrayI[i] + " " );
-//		}
-//		System.out.print( "\n");
-//		for ( int i = 0; i < newArrayII.length; i++ ) {
-//			System.out.print(newArrayII[i] + " "  );
-//		}
-//		System.out.print( "\n");
-//		for ( int i = 0; i < newArrayIII.length; i++ ) {
-//			System.out.print(newArrayIII[i] + " "  );
-//		}
+		int[] arrayI = {0, 3, 8, 9, 10};
+		int[] arrayII = {-9, -7, -4};
+		int[] arrayIII = {-9, -7, -4, 0, 3, 8, 9, 10};
+		int[] newArrayI = squareSortedArray(arrayI);
+		int[] newArrayII = squareSortedArray(arrayII);
+		int[] newArrayIII = squareSortedArray(arrayIII);
+	
+		for ( int i = 0; i < newArrayI.length; i++ ) {
+			System.out.print( newArrayI[i] + " " );
+		}
+		System.out.print( "\n");
+		for ( int i = 0; i < newArrayII.length; i++ ) {
+			System.out.print(newArrayII[i] + " "  );
+		}
+		System.out.print( "\n");
+		for ( int i = 0; i < newArrayIII.length; i++ ) {
+			System.out.print(newArrayIII[i] + " "  );
+		}
 		
 		/*
 		 * Best Time to Buy and Sell Stock I
