@@ -1,7 +1,12 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
 
 public class ArrayCodes {
@@ -458,19 +463,218 @@ public class ArrayCodes {
 		return result;
 	}
 	
+	public static List<List<Integer>> sumTwoNumbersIII ( int[] array, int k ) {
+		
+		List<List<Integer>> result = new ArrayList<>();
+		List<Integer> temp = new ArrayList<>();
+		HashMap<Integer, Integer> map = new HashMap<>();
+		
+		if ( array.length <= 1 ) {
+			result.add(new ArrayList<>());
+			return result;
+		}
+		
+		for ( int i = 0; i < array.length; i++ ) {
+			
+			if ( map.containsKey( k - array[i] ) ) {
+				temp.add( k - array[i] );
+				temp.add( array[i] );
+				result.add( temp );
+				temp = new ArrayList<>();
+				map.keySet().remove( k - array[i] );
+			} else {
+				map.put( k - array[i],  array[i] );
+			}
+		}
+		
+		return result;
+	}
+	
+	/*
+	 * LoL 
+	 * 
+	 * Question: You're given a list-of-lists-of-integers as an input, for example (using the Python notation for simplicity):
+	 * LoL = [  [1, 2, 3, 4], [44, 55], [7, 8, 9 ]
+	 * So it's a list of 3 lists, each list having its own size.  Basically this is to make it  variable at multiple levels, both
+	 * the # lists is not fixed, and the length of each list is also variable.
+	 * The question is to write a function that takes that list-of-lists and returns a list of entries, where each entry is a 
+	 * list of integers, one value from each of the input lists, for all such combinations.
+	 * So in this example the output would be a list of entries, each containing 3 values (because it's 3 lists), and
+	 * they would be:
+	 * out = [ [1, 44, 7], [1, 44, 8], [1, 44, 9], [1, 55, 7], [1, 55, 8], [1, 55, 9], [2, 44, 7], ... ]
+	 * So it's all combinations of any element from the 1st list, with any element from the 2nd list, and any element 
+	 * from the 3rd list, etc.
+	 * 
+	 * Assumption: Solved this question for a fix number ( here 3 ) of lists inside the input list
+	 * First I tried to solve this question for an input list that contains three lists, to just find a pattern to follow in order to construct the desire output.
+	 * then I tried to use recursion
+	 * 
+	 */
+
+	 
+	
+	public static List<List<Integer>> testLoLBruteForce ( List<List<Integer>> input ) {
+		
+		List<List<Integer>> finalRes = new ArrayList<>();
+		List<Integer> temp = new ArrayList<>();
+		
+		List<Integer> listI = input.get(0);
+		List<Integer> ListII = input.get(1);
+		List<Integer> ListIII = input.get(2);
+		
+		for ( int j = 0; j < listI.size(); j++ ) {
+				
+			temp.add(listI.get(j));
+			// defining tempI to avoid overriding temp.
+			List<Integer> tempI = new ArrayList<>(); 
+			tempI.addAll(temp);
+				
+			for ( int k = 0; k < ListII.size(); k++ ) {
+				
+				tempI.add(ListII.get(k));
+				// defining tempII to avoid overriding tempI.
+				List<Integer> tempII = new ArrayList<>();
+				tempII.addAll(tempI);
+				
+				for ( int l = 0; l < ListIII.size(); l++ ) {
+					
+					tempII.add(ListIII.get(l));
+					// defining tempIII to avoid overriding tempII.
+					List<Integer> tempIII = new ArrayList<>();
+					tempIII.addAll(tempII);
+					
+					
+					finalRes.add(tempIII);
+					
+					tempII.remove(tempII.size() - 1);
+				}
+				tempI.remove(tempI.size() - 1);
+			}
+			temp.remove(temp.size() - 1);
+		}
+		
+		return finalRes;
+			
+	}
+	
+	public static List<List<Integer>> testCode ( List<List<Integer>> input ) {
+		List<List<Integer>> finalRes = new ArrayList<>();
+		List<Integer> temp = new ArrayList<>();
+		return testCodeHelper ( input, finalRes, temp, 0 );
+	}
+ 
+	public static List<List<Integer>> testCodeHelper ( List<List<Integer>> input, List<List<Integer>> finalRes,  List<Integer> temp, int start ) {
+		System.out.println( "finalRes: " + finalRes );
+		System.out.println( "temp: " + temp );
+		System.out.println( "start: " + start );
+		System.out.println();
+		
+		if ( temp.size() == input.size() ) {
+			finalRes.add( new ArrayList(temp) );
+		} else {
+		
+			List<Integer> curr = input.get( start );
+			
+			for ( int i = 0; i < curr.size(); i++ ) {
+				temp.add(curr.get(i));
+				testCodeHelper ( input, finalRes, temp, start + 1 );
+				temp.remove( temp.size() - 1 );
+			}
+			
+		}
+		
+		System.out.println("finalRes size: " + finalRes.size() );
+		System.out.println();
+		return finalRes;
+	}
+	
 	//***********************************************************************************************************************
 	//***********************************************************************************************************************
 	//***********************************************************************************************************************
 	
 	public static void main ( String[] args ) {
+		
+		
+		
+		
+		/*
+		 * Test
+		 */
+//		List<Integer> first = new ArrayList<>();
+//		first.add(1);
+//		first.add(2);
+//		first.add(3);
+//		first.add(4);
+//		
+//		List<Integer> sec = new ArrayList<>();
+//		sec.add(44);
+//		sec.add(55);
+//		
+//		List<Integer> third = new ArrayList<>();
+//		third.add(7);
+//		third.add(8);
+//		third.add(9);
+//		
+//		List<List<Integer>> input = new ArrayList<>();
+//	    input.add(first);
+//		input.add(sec);
+//		input.add(third);
+//		
+//		List<List<Integer>> finalRes = testLoLBruteForce(input);
+//		System.out.print( finalRes + " " );
+		
+//		List<Integer> temp = new ArrayList<>();
+//		
+//		int[] arrayI = input[0];
+//		int[] arrayII = input[1];
+//		int[] arrayIII = input[2];
+//		
+//		// System.out.println(input.length);
+//		for ( int j = 0; j < arrayI.length; j++ ) {
+//				
+//				temp.add(arrayI[j]);
+//				
+//				for ( int k = 0; k < arrayII.length; k++ ) {
+//					
+//					temp.add(arrayII[k]);
+//							
+//					for ( int l = 0; l < arrayIII.length; l++ ) {
+//						
+//						temp.add(arrayIII[l]);
+//						if ( temp.size() == input.length ) {
+//							finalRes.add(temp);
+//							System.out.println("finalRes is: " + finalRes);
+//							System.out.println(temp);
+//							temp.remove(temp.size() - 1);
+//							System.out.println("temp is: " + temp);	
+//						}
+//					}
+//					temp.remove(temp.size() - 1);
+//				}
+//				temp.remove(temp.size() - 1);
+//			
+//			}
+//			
+		
+		
+		
+		
+		
+		
+		
+		
 		/*
 		 * sumTwoNumbers
 		 */
-//		int[] arrayI = {9, 3, 1, 10, 6, -5, 4, 2, 100, 12, 8};
+//		int[] arrayI = {9, 3, 1, 1, 10, 6, -5, 4, 2, 100, 12, 8};
 //		int[] arrayII = {-5, 1, 2, 3, 4, 6, 7, 8, 9, 10, 100};
+//		int[] arrayIII = {4, 4, 3, 3, 2, 2, 5, 5};
+//		int[] arrayIIII = {3, 3, 4, 4};
 //		
-//		List<List<Integer>> resultI = sumTwoNumbersII(arrayI, 7);
-//		List<List<Integer>> resultII = sumTwoNumbersII(arrayII, 7);
+//		List<List<Integer>> resultI = sumTwoNumbersIII(arrayI, 7);
+//		List<List<Integer>> resultII = sumTwoNumbersIII(arrayII, 7);
+//		List<List<Integer>> resultIII = sumTwoNumbersIII(arrayIII, 7);
+//		List<List<Integer>> resultIIII = sumTwoNumbersIII(arrayIIII, 7);
 //		
 //		for ( int i = 0; i < resultI.size(); i++ ) {
 //			System.out.print( resultI.get(i) + " " );
@@ -479,28 +683,35 @@ public class ArrayCodes {
 //		for ( int i = 0; i < resultII.size(); i++ ) {
 //			System.out.print( resultII.get(i) + " " );
 //		}
-		
+//		System.out.print( "\n" );
+//		for ( int i = 0; i < resultIII.size(); i++ ) {
+//			System.out.print( resultIII.get(i) + " " );
+//		}
+//		System.out.print( "\n" );
+//		for ( int i = 0; i < resultIIII.size(); i++ ) {
+//			System.out.print( resultIIII.get(i) + " " );
+//		}
 		/*
 		 * squareSortedArray && squareSortedArrayII 
 		 */		
-		int[] arrayI = {0, 3, 8, 9, 10};
-		int[] arrayII = {-9, -7, -4};
-		int[] arrayIII = {-9, -7, -4, 0, 3, 8, 9, 10};
-		int[] newArrayI = squareSortedArray(arrayI);
-		int[] newArrayII = squareSortedArray(arrayII);
-		int[] newArrayIII = squareSortedArray(arrayIII);
-	
-		for ( int i = 0; i < newArrayI.length; i++ ) {
-			System.out.print( newArrayI[i] + " " );
-		}
-		System.out.print( "\n");
-		for ( int i = 0; i < newArrayII.length; i++ ) {
-			System.out.print(newArrayII[i] + " "  );
-		}
-		System.out.print( "\n");
-		for ( int i = 0; i < newArrayIII.length; i++ ) {
-			System.out.print(newArrayIII[i] + " "  );
-		}
+//		int[] arrayI = {0, 3, 8, 9, 10};
+//		int[] arrayII = {-9, -7, -4};
+//		int[] arrayIII = {-9, -7, -4, 0, 3, 8, 9, 10};
+//		int[] newArrayI = squareSortedArray(arrayI);
+//		int[] newArrayII = squareSortedArray(arrayII);
+//		int[] newArrayIII = squareSortedArray(arrayIII);
+//	
+//		for ( int i = 0; i < newArrayI.length; i++ ) {
+//			System.out.print( newArrayI[i] + " " );
+//		}
+//		System.out.print( "\n");
+//		for ( int i = 0; i < newArrayII.length; i++ ) {
+//			System.out.print(newArrayII[i] + " "  );
+//		}
+//		System.out.print( "\n");
+//		for ( int i = 0; i < newArrayIII.length; i++ ) {
+//			System.out.print(newArrayIII[i] + " "  );
+//		}
 		
 		/*
 		 * Best Time to Buy and Sell Stock I

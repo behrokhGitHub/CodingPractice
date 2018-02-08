@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.lang.Comparable;
@@ -25,7 +26,6 @@ public class BST {
 		
 	}
 	
-	
 	/*
 	 * 1) Create an empty queue (q) to store tree nodes
 	 * 2) Create an empty list (result)  
@@ -39,32 +39,36 @@ public class BST {
 	 */
 	public void levelOrder ( TreeNode root ) {
 		
-		List<TreeNode> temp = new ArrayList<>();
+		Queue<TreeNode> q = new LinkedList<>();
+		TreeNode dummy = new TreeNode(null, null);
+		
 		
 		if ( root != null ) {
-			temp.add(root);
+			q.add(root);
+			q.add(dummy);
 		}
 		
-		while ( temp.size() != 0 ) {
+		while ( !q.isEmpty() ) {
 			
-			for ( int i = 0; i < temp.size(); i++ ) {
-				TreeNode curr = temp.get(i);
-				System.out.print(curr.getData() + " ");
-			}
-			System.out.println();
+			TreeNode curr = q.poll();
 			
-			List<TreeNode> parents = temp;
-			temp = new ArrayList<>();
-			
-			for ( TreeNode par : parents ) {
-				if ( par.left() != null ) {
-					temp.add(par.left());
+			if ( curr != null ) {
+				System.out.println(curr);
+				
+				if ( curr.left() != null ) {
+					q.add(curr.left());
 				}
 				
-				if ( par.right() != null ) {
-					temp.add(par.right());
+				if ( curr.right() != null ) {
+					q.add(curr.right());
+				}
+			} else {
+				
+				if ( !q.isEmpty() ) {
+					q.add(dummy);
 				}
 			}
+			
 		}
 	}
 
