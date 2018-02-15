@@ -443,23 +443,25 @@ public class ArrayCodes {
 		List<List<Integer>> result = new ArrayList<>();
 		List<Integer> temp = new ArrayList<>();
 		HashMap<Integer, Integer> map = new HashMap<>();
-		
+				
 		if ( array.length <= 1 ) {
 			result.add(new ArrayList<>());
 			return result;
 		}
 		
 		for ( int i = 0; i < array.length; i++ ) {
-			int num = k - array[i];
-			if ( map.containsKey(array[i]) ) {
-				temp.add(array[i]);
-				temp.add(map.get(array[i]));
-				result.add(temp);
+			
+			if ( map.containsValue( k - array[i] ) ) {
+				temp.add( k - array[i] );
+				temp.add( array[i] );
+				result.add( temp );
 				temp = new ArrayList<>();
+				map.values().remove( k - array[i] );
 			} else {
-				map.put(num, array[i]);
+				map.put( i,  array[i] );
 			}
 		}
+
 		return result;
 	}
 	
@@ -467,7 +469,7 @@ public class ArrayCodes {
 		
 		List<List<Integer>> result = new ArrayList<>();
 		List<Integer> temp = new ArrayList<>();
-		HashMap<Integer, Integer> map = new HashMap<>();
+		HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
 		
 		if ( array.length <= 1 ) {
 			result.add(new ArrayList<>());
@@ -477,16 +479,22 @@ public class ArrayCodes {
 		for ( int i = 0; i < array.length; i++ ) {
 			
 			if ( map.containsKey( k - array[i] ) ) {
-				temp.add( k - array[i] );
+				temp.add( array[map.get(k - array[i]).get(0)] );
 				temp.add( array[i] );
 				result.add( temp );
 				temp = new ArrayList<>();
-				map.keySet().remove( k - array[i] );
+				map.get(k - array[i]).remove(0);
 			} else {
-				map.put( k - array[i],  array[i] );
+				if ( map.containsKey(array[i]) ) {
+					map.get(array[i]).add(i);
+				} else {
+					ArrayList<Integer> list = new ArrayList<>();
+					list.add(i);
+					map.put(array[i], list);
+				}
 			}
 		}
-		
+
 		return result;
 	}
 	
@@ -666,31 +674,31 @@ public class ArrayCodes {
 		/*
 		 * sumTwoNumbers
 		 */
-//		int[] arrayI = {9, 3, 1, 1, 10, 6, -5, 4, 2, 100, 12, 8};
-//		int[] arrayII = {-5, 1, 2, 3, 4, 6, 7, 8, 9, 10, 100};
-//		int[] arrayIII = {4, 4, 3, 3, 2, 2, 5, 5};
-//		int[] arrayIIII = {3, 3, 4, 4};
-//		
-//		List<List<Integer>> resultI = sumTwoNumbersIII(arrayI, 7);
-//		List<List<Integer>> resultII = sumTwoNumbersIII(arrayII, 7);
-//		List<List<Integer>> resultIII = sumTwoNumbersIII(arrayIII, 7);
-//		List<List<Integer>> resultIIII = sumTwoNumbersIII(arrayIIII, 7);
-//		
-//		for ( int i = 0; i < resultI.size(); i++ ) {
-//			System.out.print( resultI.get(i) + " " );
-//		}
-//		System.out.print( "\n" );
-//		for ( int i = 0; i < resultII.size(); i++ ) {
-//			System.out.print( resultII.get(i) + " " );
-//		}
-//		System.out.print( "\n" );
-//		for ( int i = 0; i < resultIII.size(); i++ ) {
-//			System.out.print( resultIII.get(i) + " " );
-//		}
-//		System.out.print( "\n" );
-//		for ( int i = 0; i < resultIIII.size(); i++ ) {
-//			System.out.print( resultIIII.get(i) + " " );
-//		}
+		int[] arrayI = {9, 3, 1, 1, 10, 6, -5, 4, 2, 100, 12, 8};
+		int[] arrayII = {-5, 1, 2, 3, 4, 6, 7, 8, 9, 10, 100};
+		int[] arrayIII = {4, 4, 3, 3, 2, 2, 5, 5};
+		int[] arrayIIII = {3, 3, 4, 4};
+		
+		List<List<Integer>> resultI = sumTwoNumbersII(arrayI, 7);
+		List<List<Integer>> resultII = sumTwoNumbersII(arrayII, 7);
+		List<List<Integer>> resultIII = sumTwoNumbersII(arrayIII, 7);
+		List<List<Integer>> resultIIII = sumTwoNumbersII(arrayIIII, 7);
+		
+		for ( int i = 0; i < resultI.size(); i++ ) {
+			System.out.print( resultI.get(i) + " " );
+		}
+		System.out.print( "\n" );
+		for ( int i = 0; i < resultII.size(); i++ ) {
+			System.out.print( resultII.get(i) + " " );
+		}
+		System.out.print( "\n" );
+		for ( int i = 0; i < resultIII.size(); i++ ) {
+			System.out.print( resultIII.get(i) + " " );
+		}
+		System.out.print( "\n" );
+		for ( int i = 0; i < resultIIII.size(); i++ ) {
+			System.out.print( resultIIII.get(i) + " " );
+		}
 		/*
 		 * squareSortedArray && squareSortedArrayII 
 		 */		
