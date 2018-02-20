@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DynamicProgramming {
@@ -11,42 +12,55 @@ public class DynamicProgramming {
 	 */
 	
 	public static List<Integer> change ( int[] currencies, int amount ) {
-		List<Integer> curr = new ArrayList<>();
-		List<Integer> best = new ArrayList<>();
-		return changeHelper ( currencies, amount, curr, best );
+		HashMap<Integer, List<Integer>> memo = new HashMap<>();
+		return changeHelperI ( currencies, amount, memo );
 	}
 	
-	public static List<Integer> changeHelper ( int[] currencies, int amount, List<Integer> curr, List<Integer> best ) {
+	public static List<Integer> changeHelperI ( int[] currencies, int amount, HashMap<Integer, List<Integer>> memo ) {
+			
+		if ( memo.containsKey( amount )) {
+			System.out.println( "USING memo ");
+			return memo.get(amount);
+		}
+			
+		if ( amount == 0 ) {
+			System.out.println( "amount is zero. ");
+			return new ArrayList<>();
+		}
+			
+		List<Integer> best = new ArrayList<>();
 		
-			
 		for ( int unit : currencies ) {
-			
-			if ( amount == 0 ) {
-				return curr;
-			}
-			
+			List<Integer> curr = new ArrayList<>();
 			if ( unit <= amount ) {
+				System.out.println( "amount is: " + amount + " and unit is: " + unit );
 				curr.add(unit);
-				List<Integer> senario = changeHelper ( currencies, amount - unit, curr, best );
-			
-				if ( best.size() == 0 || senario.size() <= best.size() ) {
-					best = new ArrayList<>(senario);
+				System.out.println( "curr is: " + curr);
+				
+				List<Integer> scenario = changeHelperI ( currencies, amount - unit, memo );
+				System.out.println( "scenario is: " + scenario );
+				
+				for ( int element : scenario ) {
+					curr.add(element);
+					System.out.println( "curr after is: " + curr);
 				}
-				curr.remove( curr.size() - 1 );
+				
+				if ( best.size() == 0 || curr.size() <= best.size() ) {
+					System.out.println( "deciding on best ..." );
+					best = curr;
+					System.out.println( "best is: " + best );
+				}
 			}
-			
 		}
 		
+		memo.put( amount, best );
+		System.out.println( "memo is: " + memo ); 
 		
 		return best;
-}
-
-	
-
+	}
 
 
 	public static void main ( String[] args ) {
-		
 		
 		int[] currencies = {10, 7, 1};
 		int amount = 14;
