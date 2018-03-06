@@ -18,52 +18,99 @@ public class DynamicProgramming {
 	
 	public static List<Integer> changeHelperI ( int[] currencies, int amount, HashMap<Integer, List<Integer>> memo ) {
 			
+//		if ( memo.containsKey( amount )) {
+//			System.out.println( "USING memo ");
+//			return memo.get(amount);
+//		}
+//			
+//		if ( amount == 0 ) {
+//			System.out.println( "amount is zero. ");
+//			return new ArrayList<>();
+//		}
+//			
+//		List<Integer> best = new ArrayList<>();
+//		
+//		for ( int unit : currencies ) {
+//			List<Integer> curr = new ArrayList<>();
+//			if ( unit <= amount ) {
+//				System.out.println( "amount is: " + amount + " and unit is: " + unit );
+//				curr.add(unit);
+//				System.out.println( "curr is: " + curr);
+//				
+//				List<Integer> scenario = changeHelperI ( currencies, amount - unit, memo );
+//				System.out.println( "scenario is: " + scenario );
+//				
+//				for ( int element : scenario ) {
+//					curr.add(element);
+//					System.out.println( "curr after is: " + curr);
+//				}
+//				
+//				if ( best.size() == 0 || curr.size() <= best.size() ) {
+//					System.out.println( "deciding on best ..." );
+//					best = curr;
+//					System.out.println( "best is: " + best );
+//				}
+//			}
+//		}
+//		
+//		memo.put( amount, best );
+//		System.out.println( "memo is: " + memo ); 
+//		
+//		return best;
 		if ( memo.containsKey( amount )) {
-			System.out.println( "USING memo ");
+			System.out.println("memo contains " + amount + ".");
 			return memo.get(amount);
 		}
 			
-		if ( amount == 0 ) {
-			System.out.println( "amount is zero. ");
-			return new ArrayList<>();
-		}
+//		if ( amount == 0 ) {
+//			return new ArrayList<>();
+//		} 
 			
 		List<Integer> best = new ArrayList<>();
+		int count = 0;
 		
 		for ( int unit : currencies ) {
+			
+			count++;
 			List<Integer> curr = new ArrayList<>();
+			List<Integer> scenario = new ArrayList<>();
+			
 			if ( unit <= amount ) {
-				System.out.println( "amount is: " + amount + " and unit is: " + unit );
 				curr.add(unit);
-				System.out.println( "curr is: " + curr);
 				
-				List<Integer> scenario = changeHelperI ( currencies, amount - unit, memo );
-				System.out.println( "scenario is: " + scenario );
-				
-				for ( int element : scenario ) {
-					curr.add(element);
-					System.out.println( "curr after is: " + curr);
-				}
-				
-				if ( best.size() == 0 || curr.size() <= best.size() ) {
-					System.out.println( "deciding on best ..." );
+				if ( amount - unit == 0 ) {
+					System.out.println( "amount is zero, and curr is: " + curr );
 					best = curr;
-					System.out.println( "best is: " + best );
+				} else {
+					scenario = changeHelperI ( currencies, amount - unit, memo );
+					if ( scenario.size() > 0 ) {
+						for ( int element : scenario ) {
+							curr.add(element);
+						}
+					}
+					
+					if ( best.size() == 0 || curr.size() <= best.size() ) {
+						best = curr;
+					} 
 				}
+			} 
+			
+			if ( count == currencies.length - 1 && best.size() == 0 ) {
+				return best;
 			}
 		}
 		
-		memo.put( amount, best );
-		System.out.println( "memo is: " + memo ); 
 		
+		memo.put(amount,  best);
+		
+		System.out.println( "memo is: " + memo ); 
 		return best;
 	}
-
-
+	
 	public static void main ( String[] args ) {
 		
-		int[] currencies = {10, 7, 1};
-		int amount = 14;
+		int[] currencies = {3, 2};
+		int amount = 5;
 		List<Integer> result = change ( currencies, amount );
 		System.out.println( result );
 	}

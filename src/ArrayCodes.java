@@ -519,8 +519,6 @@ public class ArrayCodes {
 	 * 
 	 */
 
-	 
-	
 	public static List<List<Integer>> testLoLBruteForce ( List<List<Integer>> input ) {
 		
 		List<List<Integer>> finalRes = new ArrayList<>();
@@ -596,109 +594,111 @@ public class ArrayCodes {
 		return finalRes;
 	}
 	
+	public static List<List<Integer>> lolIterativeImp ( List<List<Integer>> input ) {
+		
+		List<List<Integer>> res = new ArrayList<>();
+		List<Integer> temp = new ArrayList<>();
+		
+		int[] indecies = new int[ input.size() ];
+		int currIndex = 0;
+		boolean done = false;
+		while ( !done ) {
+			
+			for ( int i = 0; i < input.size(); i++ ) {
+				temp.add( input.get(i).get(indecies[i]) );
+			}
+			res.add( temp );
+		
+			temp = new ArrayList<>();
+			
+			currIndex = input.size() - 1;
+			indecies[currIndex]++;
+			
+			while ( indecies[currIndex] >= input.get(currIndex).size() ) {
+					indecies[currIndex] = 0;
+					currIndex = currIndex - 1;
+					
+					if ( currIndex < 0 ) {
+						done = true;
+						break;
+					}
+					
+					indecies[currIndex]++;
+				}
+			}
+
+		return res;
+			
+	}
+
+	
 	//***********************************************************************************************************************
 	//***********************************************************************************************************************
 	//***********************************************************************************************************************
 	
 	public static void main ( String[] args ) {
 		
-		
-		
-		
 		/*
 		 * Test
 		 */
-//		List<Integer> first = new ArrayList<>();
-//		first.add(1);
-//		first.add(2);
-//		first.add(3);
-//		first.add(4);
-//		
-//		List<Integer> sec = new ArrayList<>();
-//		sec.add(44);
-//		sec.add(55);
-//		
-//		List<Integer> third = new ArrayList<>();
-//		third.add(7);
-//		third.add(8);
-//		third.add(9);
-//		
-//		List<List<Integer>> input = new ArrayList<>();
-//	    input.add(first);
-//		input.add(sec);
-//		input.add(third);
-//		
-//		List<List<Integer>> finalRes = testLoLBruteForce(input);
-//		System.out.print( finalRes + " " );
+
+		/*
+		 * testing LoL
+		 */
+		List<Integer> first = new ArrayList<>();
+		first.add(1);
+		first.add(2);
+		first.add(3);
 		
-//		List<Integer> temp = new ArrayList<>();
-//		
-//		int[] arrayI = input[0];
-//		int[] arrayII = input[1];
-//		int[] arrayIII = input[2];
-//		
-//		// System.out.println(input.length);
-//		for ( int j = 0; j < arrayI.length; j++ ) {
-//				
-//				temp.add(arrayI[j]);
-//				
-//				for ( int k = 0; k < arrayII.length; k++ ) {
-//					
-//					temp.add(arrayII[k]);
-//							
-//					for ( int l = 0; l < arrayIII.length; l++ ) {
-//						
-//						temp.add(arrayIII[l]);
-//						if ( temp.size() == input.length ) {
-//							finalRes.add(temp);
-//							System.out.println("finalRes is: " + finalRes);
-//							System.out.println(temp);
-//							temp.remove(temp.size() - 1);
-//							System.out.println("temp is: " + temp);	
-//						}
-//					}
-//					temp.remove(temp.size() - 1);
-//				}
-//				temp.remove(temp.size() - 1);
-//			
-//			}
-//			
+		List<Integer> sec = new ArrayList<>();
+		sec.add(44);
+		sec.add(55);
 		
+		List<Integer> third = new ArrayList<>();
+		third.add(7);
+		third.add(8);
+		third.add(9);
 		
+		List<List<Integer>> input = new ArrayList<>();
+	    input.add(first);
+		input.add(sec);
+		input.add(third);
 		
+		List<List<Integer>> finalRes = lolIterativeImp(input);
+		System.out.print( finalRes + " " );
 		
-		
-		
-		
+
+
 		
 		/*
 		 * sumTwoNumbers
-		 */
-		int[] arrayI = {9, 3, 1, 1, 10, 6, -5, 4, 2, 100, 12, 8};
-		int[] arrayII = {-5, 1, 2, 3, 4, 6, 7, 8, 9, 10, 100};
-		int[] arrayIII = {4, 4, 3, 3, 2, 2, 5, 5};
-		int[] arrayIIII = {3, 3, 4, 4};
+//		 */
+//		int[] arrayI = {9, 3, 1, 1, 10, 6, -5, 4, 2, 100, 12, 8};
+//		int[] arrayII = {-5, 1, 2, 3, 4, 6, 7, 8, 9, 10, 100};
+//		int[] arrayIII = {4, 4, 3, 3, 2, 2, 5, 5};
+//		int[] arrayIIII = {3, 3, 4, 4};
+//		
+//		List<List<Integer>> resultI = sumTwoNumbersII(arrayI, 7);
+//		List<List<Integer>> resultII = sumTwoNumbersII(arrayII, 7);
+//		List<List<Integer>> resultIII = sumTwoNumbersII(arrayIII, 7);
+//		List<List<Integer>> resultIIII = sumTwoNumbersII(arrayIIII, 7);
+//		
+//		for ( int i = 0; i < resultI.size(); i++ ) {
+//			System.out.print( resultI.get(i) + " " );
+//		}
+//		System.out.print( "\n" );
+//		for ( int i = 0; i < resultII.size(); i++ ) {
+//			System.out.print( resultII.get(i) + " " );
+//		}
+//		System.out.print( "\n" );
+//		for ( int i = 0; i < resultIII.size(); i++ ) {
+//			System.out.print( resultIII.get(i) + " " );
+//		}
+//		System.out.print( "\n" );
+//		for ( int i = 0; i < resultIIII.size(); i++ ) {
+//			System.out.print( resultIIII.get(i) + " " );
+//		}
 		
-		List<List<Integer>> resultI = sumTwoNumbersII(arrayI, 7);
-		List<List<Integer>> resultII = sumTwoNumbersII(arrayII, 7);
-		List<List<Integer>> resultIII = sumTwoNumbersII(arrayIII, 7);
-		List<List<Integer>> resultIIII = sumTwoNumbersII(arrayIIII, 7);
-		
-		for ( int i = 0; i < resultI.size(); i++ ) {
-			System.out.print( resultI.get(i) + " " );
-		}
-		System.out.print( "\n" );
-		for ( int i = 0; i < resultII.size(); i++ ) {
-			System.out.print( resultII.get(i) + " " );
-		}
-		System.out.print( "\n" );
-		for ( int i = 0; i < resultIII.size(); i++ ) {
-			System.out.print( resultIII.get(i) + " " );
-		}
-		System.out.print( "\n" );
-		for ( int i = 0; i < resultIIII.size(); i++ ) {
-			System.out.print( resultIIII.get(i) + " " );
-		}
 		/*
 		 * squareSortedArray && squareSortedArrayII 
 		 */		
