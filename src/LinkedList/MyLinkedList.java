@@ -1,10 +1,11 @@
+package LinkedList;
 import java.util.HashSet;
 
 public class MyLinkedList {
 	
-	private ListNode head;
-	private ListNode tail;
-	private int size;
+	public ListNode head;
+	public ListNode tail;
+	public int size;
 	
 	public MyLinkedList() {
 		this.size = 0;

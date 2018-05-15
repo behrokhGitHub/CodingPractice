@@ -1,3 +1,4 @@
+package CodingPractice;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,53 +19,11 @@ public class DynamicProgramming {
 	
 	public static List<Integer> changeHelperI ( int[] currencies, int amount, HashMap<Integer, List<Integer>> memo ) {
 			
-//		if ( memo.containsKey( amount )) {
-//			System.out.println( "USING memo ");
-//			return memo.get(amount);
-//		}
-//			
-//		if ( amount == 0 ) {
-//			System.out.println( "amount is zero. ");
-//			return new ArrayList<>();
-//		}
-//			
-//		List<Integer> best = new ArrayList<>();
-//		
-//		for ( int unit : currencies ) {
-//			List<Integer> curr = new ArrayList<>();
-//			if ( unit <= amount ) {
-//				System.out.println( "amount is: " + amount + " and unit is: " + unit );
-//				curr.add(unit);
-//				System.out.println( "curr is: " + curr);
-//				
-//				List<Integer> scenario = changeHelperI ( currencies, amount - unit, memo );
-//				System.out.println( "scenario is: " + scenario );
-//				
-//				for ( int element : scenario ) {
-//					curr.add(element);
-//					System.out.println( "curr after is: " + curr);
-//				}
-//				
-//				if ( best.size() == 0 || curr.size() <= best.size() ) {
-//					System.out.println( "deciding on best ..." );
-//					best = curr;
-//					System.out.println( "best is: " + best );
-//				}
-//			}
-//		}
-//		
-//		memo.put( amount, best );
-//		System.out.println( "memo is: " + memo ); 
-//		
-//		return best;
 		if ( memo.containsKey( amount )) {
 			System.out.println("memo contains " + amount + ".");
 			return memo.get(amount);
 		}
 			
-//		if ( amount == 0 ) {
-//			return new ArrayList<>();
-//		} 
 			
 		List<Integer> best = new ArrayList<>();
 		int count = 0;

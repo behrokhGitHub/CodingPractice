@@ -1,58 +1,65 @@
-
+package LinkedList;
 /*
  * Test will be in My LinkedListTest.java
  */
 public class MyStack {
-	public ListNode top;
-	public ListNode first;
+	public ListNode head;
+	public ListNode tail;
 	public int size;
 	
 	public MyStack() {
 		this.size = 0;
 	}
 	
+	// same implementation as addLast() for linkedlist class
 	public void push( Integer val ) {
 		ListNode newNode = new ListNode(val);
 		
-		if ( top == null ) {
-			top = first = newNode;
+		if ( tail == null ) {
+			tail = head = newNode;
 		} else {
-			top.next = newNode;
-			top = newNode;
+			tail.next = newNode;
+			tail = newNode;
 		}
 		size++;
 	}
 	
+	// same implementation as removeLast() in linkedlist class
 	public Integer pop() {
 		
 		if ( isEmpty() ) {
 			return null;
 		}
 		
-		ListNode prev = first;
-		Integer removed = top.data;
+		Integer removed = tail.data;
 		
-		for ( int i = 0; i < size-1; i++ ) {
-			prev = prev.next;
+		if ( size == 1 ) {
+			
+			head = tail = null;
+			size = 0;
+			
+		} else {
+			
+			ListNode curr = head;
+			
+			while ( curr.next.next != null ) {
+				curr = curr.next;
+			}
+			
+			tail = curr;
+			curr.next = null;
+			size--;
 		}
-		// OR:
-		/*
-		 * while ( first != last && prev.next.next != null ) {
-		 * 		prev = prev.next;
-		 */
 		
-		prev.next = null;
-		top = prev;
-		size--;
 		return removed;
 		
 	}
 	
 	public Integer peek() {
-		if ( top == null ) {
+		if ( tail == null ) {
 			return null;
 		} 
-		return top.data;
+		return tail.data;
 	}
 	
 	public boolean isEmpty() {
@@ -68,7 +75,7 @@ public class MyStack {
 	
 	// get ( int index )
 	public Integer get ( int index ) {
-		ListNode curr = first;
+		ListNode curr = head;
 		
 		for ( int i = 0; i < index; i++ ) {
 			curr = curr.next;
@@ -78,6 +85,9 @@ public class MyStack {
 	}
 	
 	public Integer getFirst() {
-		return first.data;
+		if ( head == null ) {
+			return null;
+		}
+		return head.data;
 	}
 }

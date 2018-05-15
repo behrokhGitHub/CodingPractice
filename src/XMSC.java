@@ -3,6 +3,9 @@ import java.util.List;
 import java.util.Stack;
 
 public class XMSC {
+	
+	
+	
 	/*
 	 * Write a function that prints out the numbers from 1 to 100, each on one line, except that,
 	 * if the number is a multiple of 3, print "Fizz" instead of the number, and if the number 
@@ -246,6 +249,19 @@ public class XMSC {
 	public static void main ( String[] args ) {
 		
 		/*
+		 * Reverse a String
+		 */
+//		String s = "hello";
+//		char[] array = s.toCharArray();
+//		String str = "";
+//		
+//		for ( int i = array.length - 1; i >= 0; i-- ) {
+//			str += array[i];
+//		}
+//		
+//		System.out.println( "The new string is: " + str);
+		
+		/*
 		 * Test "countNumOneBit"
 		 */
 //		int input = 15;
@@ -266,11 +282,11 @@ public class XMSC {
 		 * Test power functions
 		 */
 		
-		for ( int i = 1; i < 30; i++ ) {
-			double resRec = powerRec ( 2, i);
-			double resItr = powerBit ( 2, i);
-			System.out.println( "2^"+ i + " = " +  resRec + ", " + resItr );
-		}
+//		for ( int i = 1; i < 30; i++ ) {
+//			double resRec = powerRec ( 2, i);
+//			double resItr = powerBit ( 2, i);
+//			System.out.println( "2^"+ i + " = " +  resRec + ", " + resItr );
+//		}
 //		
 //		int x = 2;
 //		int y = 15;

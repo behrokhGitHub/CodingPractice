@@ -1,16 +1,49 @@
+package ArrayCodes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.Set;
 import java.util.Stack;
+import java.util.TreeMap;
+
+
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class ArrayCodes {
 	
+	/*
+	 * majorityElement
+	 */
+	public static int majorityElement(int[] nums) {
+        
+        int maj = nums[0];
+        int count = 1;
+        
+        for ( int i = 1; i < nums.length; i++ ) {
+            if ( count == 0 ) {
+                maj = nums[i];
+                count++;
+            } else if ( maj == nums[i] ) {
+                count++;
+            } else {
+                count--;
+            }
+        
+        }
+        return maj;
+        
+    }
+
 	/*
 	 * Best Time to Buy and Sell Stock I
 	 * 
@@ -302,105 +335,6 @@ public class ArrayCodes {
 		return index;
 	}
 	
-	/*
-	 * Given a array of integers which is sorted. write a function to square each number of the Array in sorted way.
-	 */
-	/* Solution: 
-	* Considered 3 different cases, the input array contains: 
-	* 1. only positive integers, 2. only negative integers, 3. Both positive and negative integers.
-	* For the first and second cases, loop through the array, for the first case, from 0 to 
-	* (array.length - 1), and for the second one from (array.length - 1) to 0, squared each element     
-	*  and set the result in the newArray, and return it.
-	* For the case that we have both positive, and negative integers, I have 2 pointers, one 
-	* (posIndex) which keeps track of positive integers and moves forward, the other (negIndex)      
-	* which keeps track of negative integers, and moves backward. At each step, I compare the       
-	* absolute value of the array’s element at pos/negIndex, and construct the newArray.
-	*/
-
-	public static int[] squareSortedArray ( int[] array ) {
-		int len = array.length;
-		int[] newArray = new int[len];
-		int index = 0;
-		
-		int posIndex = 0;
-		int negIndex = 0;
-		
-		if ( array[len - 1] < 0 ) {
-			negIndex = len - 1;
-			posIndex = len;
-		} else {
-			while ( array[posIndex] < 0 ) {
-				posIndex++;
-			}
-			negIndex = posIndex-1;
-		}
-		
-		while ( posIndex < array.length && negIndex >= 0 ) {
-			if ( Math.abs(array[posIndex]) <= Math.abs(array[negIndex] )) {
-				newArray[index++] = array[posIndex]*array[posIndex];
-				posIndex++;
-			} else {
-				newArray[index++] = array[negIndex]*array[negIndex];
-				negIndex--;
-			} 
-			
-		}
-		
-		while ( posIndex < array.length ) {
-			newArray[index++] = array[posIndex]*array[posIndex];
-			posIndex++;
-		}
-
-		while ( negIndex >= 0 ) {
-			newArray[index++] = array[negIndex]*array[negIndex];
-			negIndex--;
-		}
-		
-		
-		return newArray;
-	}
-	
-	public static int[] squareSortedArrayII ( int[] array ) {
-		int len = array.length;
-		int[] newArray = new int[len];
-		int index = 0;
-		
-		int tempInd = 0;
-		
-		while ( tempInd < len ) {
-			if ( array[tempInd] >= 0 ) {
-				break;
-			} else {
-				tempInd++;
-			}
-		}
-		
-		int posIndex = tempInd;
-		int negIndex = tempInd - 1;
-		
-		while ( posIndex < array.length && negIndex >= 0 ) {
-			if ( array[posIndex]*array[posIndex] <= array[negIndex]*array[negIndex] ) {
-				newArray[index++] = array[posIndex]*array[posIndex];
-				posIndex++;
-			} else {
-				newArray[index++] = array[negIndex]*array[negIndex];
-				negIndex--;
-			} 
-		}
-
-		while ( posIndex < array.length ) {
-				newArray[index++] = array[posIndex]*array[posIndex];
-				posIndex++;
-		}
-		
-		
-		while ( negIndex >= 0 ) {
-				newArray[index++] = array[negIndex]*array[negIndex];
-				negIndex--;
-		}
-		
-		return newArray;
-	}
 	
 	/*
 	 * given an array of integer A and a constant K, write a function to print all the pairs of numbers in A 
@@ -630,42 +564,155 @@ public class ArrayCodes {
 		return res;
 			
 	}
+	
+	public static int hasNext ( List<List<Integer>> input ) {
+		
+		PriorityQueue<Integer> pq = new PriorityQueue<>();
+		int index = 0;
+		int i = 0;
+		int j = i + 1;
+		int min = 0;
+		
+		while ( i < input.size() && j < input.size() ) {
+			
+			if ( input.get(i).get(index) <= input.get(j).get(index) ) {
+				min = input.get(i).get(index);
+				pq.add(input.get(j).get(index));
+			} else {
+				min = input.get(j).get(index);
+				pq.add(input.get(i).get(index));
+			}
+		}
+ 		 
+		return 0;
+	}
+	
+	/*
+	 * reverse an array.
+	 */
+	public static void reverseArray ( String[] array ) {
+		 reverseArray ( array, 0, array.length - 1 );
+	}
+
+	public static void reverseArray ( String[] array, int low, int high ) {
+		while ( low < high ) {
+			String temp = array[high];
+			array[high] = array[low];
+			array[low] = temp;
+			low++;
+			high--;
+		}
+		
+	}
 
 	
+	
+	
 	//***********************************************************************************************************************
 	//***********************************************************************************************************************
 	//***********************************************************************************************************************
 	
+	
+	
 	public static void main ( String[] args ) {
+				
+//		int colon = input.indexOf(':', i);
+//		System.out.println("colon: " + colon );
+//		
+//		int size = Integer.valueOf(input.substring(i, colon).length());
+//		System.out.println("size: " + size );
+//		
+//		String userIdUrl = input.substring(colon + 1, colon + size + 1) ;
+//		
+//		colon = userIdUrl.indexOf(':', i);
+//		System.out.println("colon: " + colon );
+//		
+//		size = Integer.valueOf(userIdUrl.substring(i, colon).length());
+//		System.out.println("size: " + size );
+		
+//		String userId = userIdUrl.substring(colon - 1) ;
+//		System.out.println("userId: " + userId );
+		
+	    
 		
 		/*
-		 * Test
+		 * test reverseArray
 		 */
+//		String[] array = { "sky", "is", "blue" };
+//		reverseArray(array);
+//		for ( int i = 0; i < array.length; i++ ) {
+//			System.out.print( array[i] + " ");
+//		}
+		
+//		int[] array = { 1, 4, 5, 6, 7, 2, 8, 9, 10, 2, 3};
+//	
+//		int slow = array[0];
+//	    int fast = array[array[0]];
+//	 
+//	    // making sure there is a loop
+//	    while ( slow != fast ) {
+//	        slow = array[slow];
+//	        fast = array[array[fast]];
+//	    }
+//	 
+//	    if ( slow == fast ) {
+//	    		System.out.println("There is a duplicate number.");
+//	    }
+//	    
+//	    fast = 0;
+//	 
+//	    while(fast != slow){
+//	        slow = array[slow];
+//	        System.out.println(slow);
+//	        fast = array[fast];
+//	        System.out.println(fast);
+//	        System.out.println();
+//	    }
+//	   
+//	    System.out.print("slow is: " + slow);
+	    
+//		int[][] matrix = new int[7][2];
+//		System.out.println("matrix: " + matrix[0].length);
+//		
+//		int[] testArray = { 1, 2, 3, 4, 5, 6, 7, 7, 8, 9};
+//		
+//		int sum = testArray[0];
+//		
+//		for ( int i = 0; i < testArray.length; i++ ) {
+//			sum ^= testArray[i];
+//		}
+//		System.out.println( "sum is: " + sum );
+//		
+//		/*
+//		 * Test majorityElement
+//		 */
+//		int[] array = {2, 3, 4, 5, 3, 3};
+//		System.out.println(majorityElement(array));
 
 		/*
 		 * testing LoL
 		 */
-		List<Integer> first = new ArrayList<>();
-		first.add(1);
-		first.add(2);
-		first.add(3);
-		
-		List<Integer> sec = new ArrayList<>();
-		sec.add(44);
-		sec.add(55);
-		
-		List<Integer> third = new ArrayList<>();
-		third.add(7);
-		third.add(8);
-		third.add(9);
-		
-		List<List<Integer>> input = new ArrayList<>();
-	    input.add(first);
-		input.add(sec);
-		input.add(third);
-		
-		List<List<Integer>> finalRes = lolIterativeImp(input);
-		System.out.print( finalRes + " " );
+//		List<Integer> first = new ArrayList<>();
+//		first.add(1);
+//		first.add(2);
+//		first.add(3);
+//		
+//		List<Integer> sec = new ArrayList<>();
+//		sec.add(44);
+//		sec.add(55);
+//		
+//		List<Integer> third = new ArrayList<>();
+//		third.add(7);
+//		third.add(8);
+//		third.add(9);
+//		
+//		List<List<Integer>> input = new ArrayList<>();
+//	    input.add(first);
+//		input.add(sec);
+//		input.add(third);
+//		
+//		List<List<Integer>> finalRes = lolIterativeImp(input);
+//		System.out.print( finalRes + " " );
 		
 
 
@@ -699,28 +746,7 @@ public class ArrayCodes {
 //			System.out.print( resultIIII.get(i) + " " );
 //		}
 		
-		/*
-		 * squareSortedArray && squareSortedArrayII 
-		 */		
-//		int[] arrayI = {0, 3, 8, 9, 10};
-//		int[] arrayII = {-9, -7, -4};
-//		int[] arrayIII = {-9, -7, -4, 0, 3, 8, 9, 10};
-//		int[] newArrayI = squareSortedArray(arrayI);
-//		int[] newArrayII = squareSortedArray(arrayII);
-//		int[] newArrayIII = squareSortedArray(arrayIII);
-//	
-//		for ( int i = 0; i < newArrayI.length; i++ ) {
-//			System.out.print( newArrayI[i] + " " );
-//		}
-//		System.out.print( "\n");
-//		for ( int i = 0; i < newArrayII.length; i++ ) {
-//			System.out.print(newArrayII[i] + " "  );
-//		}
-//		System.out.print( "\n");
-//		for ( int i = 0; i < newArrayIII.length; i++ ) {
-//			System.out.print(newArrayIII[i] + " "  );
-//		}
-		
+
 		/*
 		 * Best Time to Buy and Sell Stock I
 		 */
@@ -814,6 +840,6 @@ public class ArrayCodes {
 //		
 //		System.out.println(decimal);
 	}
-	
-	
-}
+	}
+
+

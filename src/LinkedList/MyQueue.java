@@ -1,22 +1,24 @@
-
+package LinkedList;
 public class MyQueue {
 
-	public ListNode first;
-	public ListNode last;
-	public int size;
+	private ListNode head;
+	private ListNode tail;
+	private int size;
 	
 	public MyQueue() {
 		this.size = 0;
 	}
 	
+	// same implementation as addFirst() in linked list class
 	public void enqueue( Integer val ) {
 		ListNode newNode = new ListNode(val);
 		
-		if ( last == null ) {
-			first = last = newNode;
+		if ( tail == null ) {
+			head = tail = newNode;
 		} else {
-			last.next = newNode;
-			last = newNode;
+			
+			tail.next = newNode;
+			tail = newNode;
 		}
 		size++;
 	}
@@ -26,8 +28,13 @@ public class MyQueue {
 			return null;
 		}
 		
-		Integer removed = first.data;
-		first = first.next;
+		Integer removed = head.data;
+		
+		if ( head == tail ) {
+			head = tail = null;
+		} else {
+			head = head.next;
+		}
 		size--;
 		return removed;
 	}
@@ -36,7 +43,7 @@ public class MyQueue {
 		if ( isEmpty() ) {
 			return null;
 		}
-		return first.data;
+		return head.data;
 	}
 	
 	public boolean isEmpty() {
@@ -52,7 +59,7 @@ public class MyQueue {
 	
 	// get ( int index )
 	public Integer get ( int index ) {
-		ListNode curr = first;
+		ListNode curr = head;
 		
 		for ( int i = 0; i < index; i++ ) {
 			curr = curr.next;
@@ -62,19 +69,19 @@ public class MyQueue {
 	}
 	
 	public Integer getFirst () {
-		if ( first == null ) {
+		if ( head == null ) {
 			return null;
 		}
 		
-		return first.data;
+		return head.data;
 	}
 	
 	public Integer getLast () {
-		if ( last == null ) {
+		if ( tail == null ) {
 			return null;
 		}
 		
-		return last.data;
+		return tail.data;
 	}
 	
 }
