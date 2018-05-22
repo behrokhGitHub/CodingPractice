@@ -55,20 +55,31 @@ public class PriorityQueueExample {
 		
 			int userId = Integer.valueOf( s.substring( timeStampLen + 1, timeStampLen + userIdLen + 1) );
 			
-			if ( map.containsKey( userId ) ) {
-				map.put( userId, map.get(userId) + 1 );
-			} else {
-				map.put( userId, 1 );
-			}
+//			if ( map.containsKey( userId ) ) {
+//				map.put( userId, map.get(userId) + 1 );
+//			} else {
+//				map.put( userId, 1 );
+//			}
 			
+			int count = map.getOrDefault( userId, 0 ) + 1;
+			map.put( userId, count );
 		}
 	
         for ( Map.Entry< Integer, Integer > entry : map.entrySet() ) {
         	
         		Pair p = new Pair(entry.getKey(), entry.getValue());
         		
-            pq.offer(p);
-            
+        		if ( pq.size() == 0 ) {
+        			pq.offer(p);
+        		} else {
+        			Integer currCount = p.getCount();
+            		Integer currPeek = pq.peek().getCount();
+            		
+            		if ( currCount > currPeek ) {
+            			pq.offer(p);
+            		}
+        		}
+        		            
             if( pq.size() > k ){
                 pq.poll();
             }
