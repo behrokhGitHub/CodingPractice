@@ -48,13 +48,13 @@ public class MaxHeap <T extends Comparable<T> > {
 			
 			if ( right < list.size() ) {
 				
-				if ( list.get( right ).compareTo( list.get(left) ) < 0 ) {
+				if ( list.get( right ).compareTo( list.get(left) ) > 0 ) {
 					max++;
 				}
 				
 			}
 			
-			if ( list.get( k ).compareTo( list.get( max )) > 0 ) {
+			if ( list.get( k ).compareTo( list.get( max )) < 0 ) {
 				
 				T temp = list.get(k);
 				

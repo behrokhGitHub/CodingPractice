@@ -604,6 +604,29 @@ public class ArrayCodes {
 		}
 		
 	}
+	
+	 public static int anagrams ( String a, String b ) {
+	        
+	        int count = 0;
+	        int[] countArray = new int[26];
+	        
+	        for ( int i = 0; i < a.length(); i++ ) {
+	            char c = a.charAt(i);
+	            countArray[c - 'a']++;
+	        }
+	        
+	        for ( int j = 0; j < b.length(); j++ ) {
+	            char c = b.charAt(j);
+	            countArray[c - 'a']--;
+	        }
+	        
+	        for ( int i = 0; i < countArray.length; i++ ) {
+	            if ( Math.abs(countArray[i]) == 1 ) {
+	                count++;
+	            }
+	        }
+	        return count;
+	    }
 
 	
 	
@@ -616,6 +639,10 @@ public class ArrayCodes {
 	
 	public static void main ( String[] args ) {
 				
+		
+		String a = "cde";
+		String b = "abc";
+		System.out.println( "testing anagrams:" + anagrams(a, b) );
 //		int colon = input.indexOf(':', i);
 //		System.out.println("colon: " + colon );
 //		
