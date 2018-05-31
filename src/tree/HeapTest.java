@@ -1,5 +1,7 @@
 package tree;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 public class HeapTest {
@@ -22,16 +24,18 @@ public class HeapTest {
 			
 			line = sc.nextLine();
 		}
+		
+		
 
-		int max = minHeap.delete();
-		System.out.println( max + " " + minHeap );
-		
-		
-		max = minHeap.delete();
-		System.out.println( max + " " + minHeap );
-		
-		max = minHeap.delete();
-		System.out.println( max + " " + minHeap );
+//		int max = minHeap.delete();
+//		System.out.println( max + " " + minHeap );
+//		
+//		
+//		max = minHeap.delete();
+//		System.out.println( max + " " + minHeap );
+//		
+//		max = minHeap.delete();
+//		System.out.println( max + " " + minHeap );
 		
 		
 //		MaxHeap<Integer> maxHeap = new MaxHeap<Integer>();

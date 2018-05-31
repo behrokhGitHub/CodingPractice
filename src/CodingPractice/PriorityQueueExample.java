@@ -1,12 +1,15 @@
 package CodingPractice;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Set;
 
 public class PriorityQueueExample {
 	
@@ -30,91 +33,102 @@ public class PriorityQueueExample {
 	 * ...
 	 * 
 	 */
+	public static List<Pair> topKUsers ( String file, int k ) {
 	
-	public static void main ( String[] args ) {
-				
-		String[] input = {"2018-04-18-16-30-24:00012345:/foo/bar/baz.html", "2018-04-18-16-30-24:00012345:/foo/bar/baz.html",
-				"2018-04-18-16-30-24:00000123:/foo/bar/baz.html", "2018-04-18-16-30-24:01234567:/foo/bar/baz.html",
-				"2018-04-18-16-30-24:01234567:/foo/bar/baz.html", "2018-04-18-16-30-24:00012345:/foo/bar/baz.html",
-				"2018-04-18-16-30-24:00001234:/foo/bar/baz.html", "2018-04-18-16-30-24:00123456:/foo/bar/baz.html",
-				"2018-04-18-16-30-24:00001234:/foo/bar/baz.html", "2018-04-18-16-30-24:00012345:/foo/bar/baz.html",
-				"2018-04-18-16-30-24:00012345:/foo/bar/baz.html", "2018-04-18-16-30-24:00001234:/foo/bar/baz.html",
-				"2018-04-18-16-30-24:00123456:/foo/bar/baz.html", "2018-04-18-16-30-24:00012345:/foo/bar/baz.html" };
+		String[] array = file.split(":");
 		
-		
-		int timeStampLen = 19;
-		int userIdLen = 8;
-		int k = 3;
-		
-		HashMap<Integer, Integer> map = new HashMap<>();
+		HashMap<String, Integer> map = new HashMap<>();
 		
 		MyComparator comparator = new MyComparator();
 		PriorityQueue<Pair> pq = new PriorityQueue<Pair>( k, comparator );
 		
-		for ( String s : input ) {
-		
-			int userId = Integer.valueOf( s.substring( timeStampLen + 1, timeStampLen + userIdLen + 1) );
-			
-//			if ( map.containsKey( userId ) ) {
-//				map.put( userId, map.get(userId) + 1 );
-//			} else {
-//				map.put( userId, 1 );
-//			}
-			
-			int count = map.getOrDefault( userId, 0 ) + 1;
-			map.put( userId, count );
+		for ( String s : array ) {
+			if ( s.matches("[0-9]+") ) {
+				
+				int count = map.getOrDefault( s, 0 ) + 1;
+				map.put( s, count );
+			}
 		}
+		
+	    for ( Map.Entry< String, Integer > entry : map.entrySet() ) {
+	    	
+	    		Pair p = new Pair(entry.getKey(), entry.getValue());
+	    		pq.offer(p); 
+	    		if ( pq.size() > k ) {
+	    			pq.poll();
+	    		}
+	    }
+	    
+	    List<Pair> result = new LinkedList<>();      
+	            
+	    while ( pq.size() > 0 ) {
+	    		result.add(pq.poll());
+	    }
+	    
+	    Collections.reverse( result );
+	    return result;
+	}
+
 	
-        for ( Map.Entry< Integer, Integer > entry : map.entrySet() ) {
-        	
-        		Pair p = new Pair(entry.getKey(), entry.getValue());
-        		
-        		if ( pq.size() == 0 ) {
-        			pq.offer(p);
-        		} else {
-        			Integer currCount = p.getCount();
-            		Integer currPeek = pq.peek().getCount();
-            		
-            		if ( currCount > currPeek ) {
-            			pq.offer(p);
-            		}
-        		}
-        		            
-            if( pq.size() > k ){
-                pq.poll();
-            }
-        }
-        
-        List<Integer> result = new ArrayList<>();
-        Iterator<Pair> it = pq.iterator();
-        
-        while ( it.hasNext() ) {
-        		Pair curr = (Pair) it.next();
-        		System.out.println( curr.getUserId() + ", " +  curr.getCount() );
-        		result.add( curr.getUserId() );
-        }
-        
-        Collections.reverse( result );
-        
-        System.out.println();
-        System.out.println("Count" + "   " + "UserId");
-        
-        for ( int i = 0; i < result.size(); i++ ) {
-        		System.out.println( map.get( result.get(i) ) + "       " + result.get(i));
-        }
+	public static void main ( String[] args ) {
+		
+		int k = 3;
+		String file = "2018-04-18-16-30-24:00012345:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00012345:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00000123:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:01234567:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:01234567:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00012345:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00001234:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00123456:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00001234:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00012345:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00012345:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00001234:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00123456:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00012345:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00012345:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00001234:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00123456:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00012345:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00001234:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00123456:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00001234:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00012345:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00123456:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00012345:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00012345:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00001234:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00123456:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00012345:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00001234:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00123456:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00001234:/foo/bar/baz.html"
+				+ "2018-04-18-16-30-24:00012345:/foo/bar/baz.html";
+		
+		List<Pair> result = topKUsers( file, k );
+		System.out.println();
+	    System.out.println("Count" + "   	     " + "UserId");
+	    
+	    for ( int i = 0; i < result.size(); i++ ) {
+	    		System.out.println( result.get(i).getUserId() + "       	" + result.get(i).getCount() );
+	    }
+				
 	}
 }
 
+	
+
 class Pair {
-	private Integer userId;
+	private String userId;
 	private Integer count;
 	
-	public Pair( Integer userId, Integer count ) {
+	public Pair( String userId, Integer count ) {
 		this.userId = userId;
 		this.count = count;
 	}
 	
-	public Integer getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 	

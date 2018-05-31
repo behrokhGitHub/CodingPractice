@@ -10,11 +10,6 @@ public class MyComparator implements Comparator<Pair> {
     		Integer countOne = objOne.getCount();
     		Integer countTwo = ObjTwo.getCount();
     		
-    		if ( countOne.compareTo( countTwo ) > 0 ) {
-    			return 1;
-    		} else if ( countOne.compareTo( countTwo ) < 0 ) {
-    			return -1;
-    		}
-        return 0;
+        return countOne - countTwo;
     }
 }
