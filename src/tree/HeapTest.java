@@ -9,23 +9,23 @@ public class HeapTest {
 	
 	public static void main ( String[] args ) {
 		
-		MinHeap<Integer> minHeap = new MinHeap<Integer>();
+//		MinHeap<Integer> minHeap = new MinHeap<Integer>();
+//		
+//		Scanner sc = new Scanner(System.in);
+//		
+//		System.out.println( "Enter next int, done to stop " );
+//		String line = sc.nextLine();
+//		
+//		while ( !line.equals("done") ) {
+//			minHeap.insert( Integer.parseInt( line ) );
+//			
+//			System.out.println( minHeap );
+//			System.out.println( "insert next int, done to stop " );
+//			
+//			line = sc.nextLine();
+//		}
 		
-		Scanner sc = new Scanner(System.in);
-		
-		System.out.println( "Enter next int, done to stop " );
-		String line = sc.nextLine();
-		
-		while ( !line.equals("done") ) {
-			minHeap.insert( Integer.parseInt( line ) );
-			
-			System.out.println( minHeap );
-			System.out.println( "insert next int, done to stop " );
-			
-			line = sc.nextLine();
-		}
-		
-		
+		System.out.println( "module: " + 19%5 );
 
 //		int max = minHeap.delete();
 //		System.out.println( max + " " + minHeap );

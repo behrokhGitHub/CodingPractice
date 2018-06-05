@@ -1,8 +1,12 @@
 package StringCodes;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class StringCodes {
@@ -191,6 +195,43 @@ public class StringCodes {
 		return maxLen;
 	}
 	
+	public static List<List<String>> groupStrings(String[] strings) {
+	    List<List<String>> result = new ArrayList<List<String>>();
+	    HashMap<String, ArrayList<String>> map 
+	                    = new HashMap<String, ArrayList<String>>();
+	 
+	    for(String s: strings){
+	        char[] arr = s.toCharArray();
+	        if(arr.length>0){
+	            int diff = arr[0]-'a';
+	            for(int i=0; i<arr.length; i++){
+	                if(arr[i]-diff<'a'){
+	                   arr[i] = (char) (arr[i]-diff+26);
+	                }else{
+	                   arr[i] = (char) (arr[i]-diff); 
+	                }
+	 
+	            }
+	        }  
+	 
+	        String ns = new String(arr);
+	        if(map.containsKey(ns)){
+	            map.get(ns).add(s);
+	        }else{
+	            ArrayList<String> al = new ArrayList<String>();
+	            al.add(s);
+	            map.put(ns, al);
+	        }
+	    }
+	 
+	    for(Map.Entry<String, ArrayList<String>> entry: map.entrySet()){
+	        Collections.sort(entry.getValue());
+	    }
+	 
+	    result.addAll(map.values());
+	 
+	    return result;
+	}
 	
 	
 	
@@ -200,6 +241,10 @@ public class StringCodes {
 	//***********************************************************************************************************************
 	
 	public static void main ( String[] args ) {
+		
+		
+		String[] input = {"abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"};
+		System.out.println(groupStrings(input));
 		
 		/*
 		 * reverseWordsII : given an array of characters

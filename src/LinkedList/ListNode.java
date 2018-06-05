@@ -1,6 +1,6 @@
 package LinkedList;
 
-public class ListNode {
+public class ListNode<T> {
 	public ListNode next;
 	public Integer data;
 	
