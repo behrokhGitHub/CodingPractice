@@ -1,21 +1,31 @@
 package Kazuhm;
 
+/*
+ * To Do:
+ * List of all used Libraries:
+ */
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.io.Writer;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Scanner;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -25,31 +35,68 @@ public class Asteroids {
 	
 	public static void main ( String[] args ) throws Exception {
 		 
-		 String start_date_pattern = "2015-09-07";
-		 String end_date_pattern = "2015-09-11";
+//		String start_date_pattern = "2015-09-07";
+//		String end_date_pattern = "2015-09-11";
 		
-		 String newStrs = getHTML ( start_date_pattern, end_date_pattern );
-		 System.out.println(newStrs);
-		 writeToFile(newStrs);
-		 
-		 JSONParser parser = new JSONParser();
-		 Object obj = parser.parse(new FileReader("/Users/behrokh/writeToFile.txt"));
-		 
-		 // Extracting number of element in our data
-		 JSONObject jsonObject = (JSONObject) obj;
-         Long elementCountObj = (Long) jsonObject.get("element_count");
-         Integer element_count = (int) (long) elementCountObj;
-         System.out.println("element_count: " + elementCountObj);
-        
-		 HashMap<String, Double> mapNameVelocity = mappingNameVelocity(obj);
-		 
-		 List<Pair> result = sortedByVelocity ( mapNameVelocity, element_count );
-		 
-		 Iterator<Pair> it = result.iterator();
-         while ( it.hasNext() ) {
-       	 	Pair curr = it.next();
-       	 	System.out.println( curr.name + ":" + curr.velocity );
-         }
+		/*
+		 *  To Do: Done
+		 *  Application takes start date and end date as input arguments
+		 */
+		Scanner input = new Scanner(System.in);
+		System.out.println("Enter a starting date for asteroid search in YYYY-MM-DD format: " );
+		String start_date_pattern = input.nextLine();
+	
+		System.out.println("Enter a ending date for asteroid search in YYYY-MM-DD format: " );
+		String end_date_pattern = input.nextLine();
+		
+		/*
+		 * To Do: Done
+		 * Print a human readable summary of resulting data to standard output / console,
+		 */
+		String newStrs = getHTML ( start_date_pattern, end_date_pattern );
+		System.out.println(newStrs);
+		
+		/*
+		 * To Do: Done
+		 * Result data that comes back from the API needs to get persisted, so data is available
+		 * after program is done running
+		 */
+		writeToFile(newStrs);
+		
+		JSONParser parser = new JSONParser();
+		Object obj = parser.parse(new FileReader("/Users/behrokh/writeToFile.txt"));
+		
+		//Extracting number of elements in the data
+		JSONObject jsonObject = (JSONObject) obj;
+		Long elementCountObj = (Long) jsonObject.get("element_count");
+		Integer element_count = (int) (long) elementCountObj;
+		System.out.println("element_count: " + elementCountObj);
+		
+		HashMap<String, Double> mapNameVelocity = mappingNameVelocity(obj);
+		
+		List<Pair> result = sortedByVelocity ( mapNameVelocity, element_count );
+		
+		/*
+		 * To Do: Done
+		 * Store summary of resulting data to a file, sorted descending by velocity
+		 */
+		FileWriter writer = new FileWriter("/Users/behrokh/output.txt"); 
+		Iterator<Pair> it = result.iterator();
+		while ( it.hasNext() ) {
+			Pair curr = it.next();
+			writer.write(curr.name + ":" + curr.velocity);
+			writer.write("\n");
+			System.out.println( curr.name + " ==> " + curr.velocity );
+		}
+		System.out.println();
+		writer.close();
+		
+		/*
+		 * To Do: Done
+		 * Find Asteroid with closest proximity to Earth and print its name to standard output 
+		 * console
+		 */
+		System.out.println( "Asteroid with closest proximity to Earth: " + result.get(result.size() - 1).name + " with velocity of " + result.get(result.size() - 1).velocity );
 	}
 	
 	// Function to make the connection and get the data from the URL
@@ -130,8 +177,6 @@ public class Asteroids {
 	         // Now sorting process
 	         PriorityQueue<Pair> pq = new PriorityQueue ( element_count, new VelocityComparator() );
 	         
-	         //HashMap<String, Double> mapNameVelocity = new HashMap<>();
-	         
 	         for ( Map.Entry<String, Double> entry : mapNameVelocity.entrySet() ) {
 	        	 	 Pair p = new Pair(entry.getKey(), entry.getValue());
 	             pq.offer(p);
@@ -174,3 +219,5 @@ public class Asteroids {
 	}
 
 }
+
+
