@@ -35,7 +35,6 @@ public class UnitTest {
 	    		
 	        // assert statements
 	    		assertEquals(51, (int) element_count);
-	        
 	    }
 	    
 	    private static void writeToFile(String newStrs) {
