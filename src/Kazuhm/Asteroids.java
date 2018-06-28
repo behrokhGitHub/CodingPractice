@@ -35,8 +35,9 @@ public class Asteroids {
 	
 	public static void main ( String[] args ) throws Exception {
 		 
-//		String start_date_pattern = "2015-09-07";
-//		String end_date_pattern = "2015-09-11";
+		//String start_date_pattern = "2015-09-07";
+		//String end_date_pattern = "2015-09-11";
+		//String UserPath = "/Users/behrokh/";
 		
 		/*
 		 *  To Do: Done
@@ -48,6 +49,9 @@ public class Asteroids {
 	
 		System.out.println("Enter a ending date for asteroid search in YYYY-MM-DD format: " );
 		String end_date_pattern = input.nextLine();
+		
+		System.out.println("Enter a path for storing text file (resulting data): " );
+		String UserPath = input.nextLine();
 		
 		/*
 		 * To Do: Done
@@ -61,10 +65,10 @@ public class Asteroids {
 		 * Result data that comes back from the API needs to get persisted, so data is available
 		 * after program is done running
 		 */
-		writeToFile(newStrs);
+		writeToFile(newStrs, UserPath + "writeToFile.txt");
 		
 		JSONParser parser = new JSONParser();
-		Object obj = parser.parse(new FileReader("/Users/behrokh/writeToFile.txt"));
+		Object obj = parser.parse(new FileReader(UserPath+"writeToFile.txt"));
 		
 		//Extracting number of elements in the data
 		JSONObject jsonObject = (JSONObject) obj;
@@ -80,7 +84,7 @@ public class Asteroids {
 		 * To Do: Done
 		 * Store summary of resulting data to a file, sorted descending by velocity
 		 */
-		FileWriter writer = new FileWriter("/Users/behrokh/output.txt"); 
+		FileWriter writer = new FileWriter(UserPath + "output.txt"); 
 		Iterator<Pair> it = result.iterator();
 		while ( it.hasNext() ) {
 			Pair curr = it.next();
@@ -88,6 +92,7 @@ public class Asteroids {
 			writer.write("\n");
 			System.out.println( curr.name + " ==> " + curr.velocity );
 		}
+		
 		System.out.println();
 		writer.close();
 		
@@ -173,33 +178,33 @@ public class Asteroids {
 	}
 
 	// another method to sort by velocity 
-		public static List<Pair> sortedByVelocity ( HashMap<String, Double> mapNameVelocity, Integer element_count) {
-	         // Now sorting process
-	         PriorityQueue<Pair> pq = new PriorityQueue ( element_count, new VelocityComparator() );
-	         
-	         for ( Map.Entry<String, Double> entry : mapNameVelocity.entrySet() ) {
-	        	 	 Pair p = new Pair(entry.getKey(), entry.getValue());
-	             pq.offer(p);
-	         }
-	         
-	         System.out.println();
-	         System.out.println( "Priority Queue Size is: " + pq.size());
-	         System.out.println();
-	         
-	         List<Pair> result = new ArrayList<Pair>();
-	         while(pq.size()>0){
-	             result.add(pq.poll());
-	         }
-	         
-	         return result;
-		}
+	public static List<Pair> sortedByVelocity ( HashMap<String, Double> mapNameVelocity, Integer element_count) {
+         // Now sorting process
+         PriorityQueue<Pair> pq = new PriorityQueue ( element_count, new VelocityComparator() );
+         
+         for ( Map.Entry<String, Double> entry : mapNameVelocity.entrySet() ) {
+        	 	 Pair p = new Pair(entry.getKey(), entry.getValue());
+             pq.offer(p);
+         }
+         
+         System.out.println();
+         System.out.println( "Priority Queue Size is: " + pq.size());
+         System.out.println();
+         
+         List<Pair> result = new ArrayList<Pair>();
+         while(pq.size()>0){
+             result.add(pq.poll());
+         }
+         
+         return result;
+	}
 	
 	// Helper method to transfer data to a text file
-	private static void writeToFile(String newStrs) {
+	private static void writeToFile(String newStrs, String UserPath) {
 		BufferedWriter bufferedWriter = null;
         try {
             String strContent = newStrs;
-            File myFile = new File("/Users/behrokh/writeToFile.txt");
+            File myFile = new File(UserPath);
             // check if file exist, otherwise create the file before writing
             if (!myFile.exists()) {
                 myFile.createNewFile();
