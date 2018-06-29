@@ -9,20 +9,28 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.HashMap;
+import java.util.List;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
+import org.junit.runner.JUnitCore;
+
 public class UnitTest {
 
+//		public static void main(String[] args) throws Exception {                    
+//			JUnitCore.main();  
+//			
+//		}
 
 	    @Test
-	    public void getHTMLTest() throws Exception {
+	    public void AsteroidsTest() throws Exception {
 	    		 
 	    		
-	    		String str = Asteroids.getHTML( "2015-09-07", "2015-09-11" );
+	    		String str = Asteroids.getHTML( "2015-09-07", "2015-09-09" );
 	    		
 	    		writeToFile(str);
 	    		
@@ -33,8 +41,24 @@ public class UnitTest {
 	    		Long elementCountObj = (Long) jsonObject.get("element_count");
 	    		Integer element_count = (int) (long) elementCountObj;
 	    		
+	    		HashMap<String, Double> mapNameVelocity = Asteroids.mappingNameVelocity(obj);
+	    		List<Pair> result = Asteroids.sortedByVelocity ( mapNameVelocity, element_count );
+	    		
 	        // assert statements
-	    		assertEquals(51, (int) element_count);
+	    		assertEquals( 31, (int) element_count );
+	    		
+	    		// Testing mappingNameVelocity()
+	    		assertEquals( 31, mapNameVelocity.size() );
+	    		assertEquals( (Double) 44178.3303023807, mapNameVelocity.get("(2008 QV11)") );
+	    		assertEquals( (Double) 2601.6909079299, mapNameVelocity.get("440012 (2002 LE27)") );
+	    		
+	    		// Testing sortedByVelocity()
+	    		assertEquals( 31, result.size() );
+	    		assertEquals( "440012 (2002 LE27)", result.get( result.size() - 1 ).name );
+	    		assertEquals( (Double)  2601.6909079299, result.get( result.size() - 1 ).velocity );
+	    		assertEquals( "(2008 QV11)", result.get(0).name );
+	    		assertEquals( (Double)  44178.3303023807, result.get(0).velocity );
+	    		
 	    }
 	    
 	    private static void writeToFile(String newStrs) {
