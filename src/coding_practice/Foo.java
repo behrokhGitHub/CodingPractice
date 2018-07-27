@@ -33,6 +33,7 @@ public class Foo {
 	
 	/*
 	 * foo.Add(value): insert the "value" string if it's not already in
+	 * time complexity: O(N) for set.contains(value) + O(N) for while loop = O(N)
 	 */
 	public void add ( String value ) {
 		
@@ -60,6 +61,7 @@ public class Foo {
 	
 	/*
 	 * foo.Remove(value): remove the "value" string
+	 * time complexity: O(N)
 	 */
 	public void remove ( String value ) {
 		
@@ -91,6 +93,7 @@ public class Foo {
 	
 	/*
 	 * foo.Contains(value): return True if the "value" string is in, otherwise return False
+	 * time complexity: O(N)
 	 */
 	public boolean contains ( String value ) {
 		
